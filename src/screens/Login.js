@@ -13,6 +13,7 @@ export default function Login({ navigation }) {
 
     const onLoginPress = () => {
         firebase
+        firebase
             .auth()
             .signInWithEmailAndPassword(email, password)
             .then((response) => {
@@ -21,17 +22,21 @@ export default function Login({ navigation }) {
                 usersRef
                     .doc(uid)
                     .get()
-                    .then(firestoreDoc => {
-                        if (!firestoreDoc.exists) {
-                            alert("User does not exist")
-                            return
+                    .then(firestoreDocument => {
+                        if (!firestoreDocument.exists) {
+                            alert("User does not exist anymore.")
+                            return;
                         }
-                        const user = firestoreDoc.data()
+                        const user = firestoreDocument.data()
                         navigation.navigate('Home', { user })
                     })
-                    .catch(error => alert(error))
+                    .catch(error => {
+                        alert(error)
+                    });
             })
-            .catch(error => alert(error))
+            .catch(error => {
+                alert(error)
+            })
     }
 
     return (

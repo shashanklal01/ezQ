@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet } from 'react-native'
+import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet, Picker } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { firebase } from '../firebase/config'
 
@@ -8,6 +8,7 @@ export default function Signup({ navigation }) {
     const [fullName, setFullName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [isAdmin, setIsAdmin] = useState(false)
     const [confirmPassword, setConfirmPassword] = useState('')
 
     const onLoginPress = () => {
@@ -27,16 +28,23 @@ export default function Signup({ navigation }) {
                 const data = {
                     id: uid,
                     email,
-                    fullName
+                    fullName,
+                    isAdmin,
                 };
                 const usersRef = firebase.firestore().collection('users')
                 usersRef
                     .doc(uid)
                     .set(data)
-                    .then(() => navigation.navigate('Home', { user: data }))
-                    .catch((error) => alert(error))
+                    .then(() => {
+                        navigation.navigate('Home', { user: data })
+                    })
+                    .catch((error) => {
+                        alert(error)
+                    });
             })
-            .catch((error) => alert(error))
+            .catch((error) => {
+                alert(error)
+            });
     }
 
     return (
@@ -87,6 +95,14 @@ export default function Signup({ navigation }) {
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
                 />
+                <Picker
+                    style={{ width: '100%' }}
+                    selectedValue={isAdmin}
+                    onValueChange={(val) => setIsAdmin(val)}
+                >
+                    <Picker.Item label="Customer" value={false} />
+                    <Picker.Item label="Administrator" value={true} />
+                </Picker>
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => onSignupPress()}>
