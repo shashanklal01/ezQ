@@ -27,9 +27,9 @@ export default function Signup({ navigation }) {
                 const uid = response.user.uid
                 const data = {
                     id: uid,
-                    email,
-                    fullName,
-                    isAdmin,
+                    email: email,
+                    name: fullName,
+                    isAdmin: isAdmin,
                 };
                 const usersRef = firebase.firestore().collection('users')
                 usersRef
