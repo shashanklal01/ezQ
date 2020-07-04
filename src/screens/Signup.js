@@ -95,14 +95,20 @@ export default function Signup({ navigation }) {
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
                 />
+                <View style={styles.footerView}>
+                    <Text style={styles.footerText}>I am a:</Text>
+                </View>
                 <Picker
-                    style={{ width: '100%' }}
+                    style={{ justifyContent: 'center', height: '10%' }}
+                    placeholderTextColor="#aaaaaa"
+                    placeholder='I am a:'
                     selectedValue={isAdmin}
                     onValueChange={(val) => setIsAdmin(val)}
                 >
                     <Picker.Item label="Customer" value={false} />
                     <Picker.Item label="Administrator" value={true} />
                 </Picker>
+
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => onSignupPress()}>
