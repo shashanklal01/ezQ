@@ -50,7 +50,7 @@ export default function Home(props) {
         }
     }
 
-    const renderEntity = ({item, index}) => {
+    const renderEntity = ({ item, index }) => {
         return (
             <View style={styles.entityContainer}>
                 <Text style={styles.entityText}>
@@ -76,7 +76,7 @@ export default function Home(props) {
                     <Text style={styles.buttonText}>Add</Text>
                 </TouchableOpacity>
             </View>
-            { entities && (
+            {entities && (
                 <View style={styles.listContainer}>
                     <FlatList
                         data={entities}
