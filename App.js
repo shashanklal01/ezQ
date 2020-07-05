@@ -14,12 +14,12 @@ const Stack = createStackNavigator();
 
 export default function App() {
 
-  let curUser = null
+  const [curUser, setCurUser] = useState(null)
 
   useEffect(() => {
     firebase
       .auth()
-      .onAuthStateChanged(user => curUser = user)
+      .onAuthStateChanged(user => setCurUser(user))
   }, [])
 
   return (
@@ -31,8 +31,6 @@ export default function App() {
           <>
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Signup" component={Signup} />
-
-          <Stack.Screen name="Home" component={Home} />
           </>
         )}
       </Stack.Navigator>
