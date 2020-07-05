@@ -13,29 +13,34 @@ export default function Login({ navigation }) {
 
     const onLoginPress = () => {
         firebase
-        firebase
             .auth()
             .signInWithEmailAndPassword(email, password)
             .then((response) => {
                 const uid = response.user.uid
-                const usersRef = firebase.firestore().collection('users')
-                usersRef
+                firebase
+                    .firestore()
+                    .collection('users')
                     .doc(uid)
                     .get()
                     .then(firestoreDocument => {
                         if (!firestoreDocument.exists) {
-                            alert("User does not exist anymore.")
+                            alert("User does not exist.")
                             return;
                         }
-                        const user = firestoreDocument.data()
-                        navigation.navigate('Home', { user })
+                        navigation.navigate('Home')
                     })
-                    .catch(error => {
-                        alert(error)
-                    });
+                    .catch(error => alert(error));
             })
-            .catch(error => {
-                alert(error)
+            .catch(error => alert(error))
+    }
+
+    const checkAdmin = () => {
+        firebase
+            .database()
+            .collection('users')
+            .get()
+            .then(snapshot => {
+                snapshot.docs
             })
     }
 

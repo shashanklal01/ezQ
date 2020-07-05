@@ -23,24 +23,19 @@ export default function Signup({ navigation }) {
         firebase
             .auth()
             .createUserWithEmailAndPassword(email, password)
-            .then((response) => {
-                const uid = response.user.uid
-                const data = {
-                    id: uid,
-                    email: email,
-                    name: fullName,
-                    isAdmin: isAdmin,
-                };
-                const usersRef = firebase.firestore().collection('users')
-                usersRef
-                    .doc(uid)
-                    .set(data)
-                    .then(() => {
-                        navigation.navigate('Home', { user: data })
+            .then(response => {
+                firebase
+                    .firestore()
+                    .collection('users')
+                    .doc(response.user.uid.toString())
+                    .set({
+                        id: response.user.uid,
+                        name: fullName,
+                        email: email,
+                        admin: isAdmin,
                     })
-                    .catch((error) => {
-                        alert(error)
-                    });
+                    .then(() => navigation.navigate('Login'))
+                    .catch(error => alert(error))
             })
             .catch((error) => {
                 alert(error)
