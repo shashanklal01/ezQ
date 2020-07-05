@@ -7,15 +7,26 @@ import AdminHome from '../admin/AdminHome'
 export default function Home() {
 
     const id = firebase.auth().currentUser.uid
-    const isAdmin = firebase.firestore().collection('users').doc(id)
+    const [isAdmin, setIsAdmin] = useState(false)
+    const [name, setName] = useState("")
+
+    firebase
+        .firestore()
+        .collection('users')
+        .doc(id)
+        .get()
+        .then((doc) => {
+            setIsAdmin(doc.data().admin)
+            setName(doc.data().name)
+        })
 
     return (
         <View>
-            { isAdmin ? (
-                <UserHome />
-            ) : (
+            {isAdmin ? (
                 <AdminHome />
-            )}
+            ) : (
+                    <UserHome />
+                )}
         </View>
     )
 }
