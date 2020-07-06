@@ -9,4 +9,5 @@ remember to use *** react native elements for ui
 
 ## Technical Stack
 * Design - Figma
-* 
+* Frontend - React Native
+* Backend/Database - Javascript, Google Firebase
