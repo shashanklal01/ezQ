@@ -5,7 +5,7 @@ import { firebase } from '../firebase/config'
 
 export default function Signup({ navigation }) {
 
-    const [fullName, setFullName] = useState('')
+    const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [isAdmin, setIsAdmin] = useState(false)
@@ -26,20 +26,27 @@ export default function Signup({ navigation }) {
             .then(response => {
                 firebase
                     .firestore()
-                    .collection('users')
+                    .collection(isAdmin ? 'admins' : 'users')
                     .doc(response.user.uid.toString())
-                    .set({
-                        id: response.user.uid,
-                        name: fullName,
-                        email: email,
-                        admin: isAdmin,
-                    })
+                    .set(
+                        (isAdmin) ? {
+                            id: response.user.uid,
+                            name: name,
+                            email: email,
+                            admin: isAdmin,
+                            hasSetUp: false,
+                        } : {
+                                id: response.user.uid,
+                                name: name,
+                                email: email,
+                                admin: isAdmin,
+                                curQueues: [],
+                                commonlyVisited: [],
+                            })
                     .then(() => navigation.navigate('Login'))
                     .catch(error => alert(error))
             })
-            .catch((error) => {
-                alert(error)
-            });
+            .catch(error => alert(error))
     }
 
     return (
@@ -55,8 +62,8 @@ export default function Signup({ navigation }) {
                     style={styles.input}
                     placeholder='Full Name'
                     placeholderTextColor="#aaaaaa"
-                    onChangeText={(text) => setFullName(text)}
-                    value={fullName}
+                    onChangeText={(val) => setName(val)}
+                    value={name}
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
                 />
@@ -65,7 +72,7 @@ export default function Signup({ navigation }) {
                     style={styles.input}
                     placeholder='E-mail'
                     placeholderTextColor="#aaaaaa"
-                    onChangeText={(text) => setEmail(text)}
+                    onChangeText={(val) => setEmail(val)}
                     value={email}
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
@@ -75,7 +82,7 @@ export default function Signup({ navigation }) {
                     placeholderTextColor="#aaaaaa"
                     secureTextEntry
                     placeholder='Password'
-                    onChangeText={(text) => setPassword(text)}
+                    onChangeText={(val) => setPassword(val)}
                     value={password}
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
@@ -85,7 +92,7 @@ export default function Signup({ navigation }) {
                     placeholderTextColor="#aaaaaa"
                     secureTextEntry
                     placeholder='Confirm Password'
-                    onChangeText={(text) => setConfirmPassword(text)}
+                    onChangeText={(val) => setConfirmPassword(val)}
                     value={confirmPassword}
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"

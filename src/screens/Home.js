@@ -8,16 +8,16 @@ export default function Home() {
 
     const id = firebase.auth().currentUser.uid
     const [isAdmin, setIsAdmin] = useState(false)
-    const [name, setName] = useState("")
 
     firebase
         .firestore()
-        .collection('users')
+        .collection('admins')
         .doc(id)
         .get()
         .then((doc) => {
-            setIsAdmin(doc.data().admin)
-            setName(doc.data().name)
+            if (doc.exists) {
+                setIsAdmin(true)
+            }
         })
 
     return (
