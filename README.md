@@ -8,6 +8,6 @@ remember to use *** react native elements for ui
 * Backend - Shashank Lal, Phillip Hoffmann, George Samu
 
 ## Technical Stack
-* Design - Figma
+* UI Design - Figma
 * Frontend - React Native
 * Backend/Database - Javascript, Google Firebase
