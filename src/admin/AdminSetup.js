@@ -2,22 +2,81 @@ import React, { useState } from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet, Picker } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { firebase } from '../firebase/config'
-import { Card } from 'react-native-elements'
+import { Card, Header } from 'react-native-elements'
 
 export default function AdminSetup() {
+
+    const [pharmaName, setPharmaName] = useState("")
+    const [days, setDays] = useState([])
+
     return (
-        <View>
+        <KeyboardAwareScrollView>
             <Card containerStyle={styles.card}>
                 <Card
                     containerStyle={styles.card}
-                    title='Current Queue'
+                    title='What is the name of your pharmacy?'
+                    titleStyle={styles.titleSyle}
+                >
+                    <TextInput
+                        placeholder='e.g. CVS'
+                        autoCorrect={false}
+                        inputStyle={styles.input}
+                        onChangeText={val => setPharmaName(val)}
+                        value={pharmaName}
+                    />
+                </Card>
+                <Card
+                    containerStyle={styles.card}
+                    title='Where are you located?'
+                    titleStyle={styles.titleSyle}
+                >
+                    <Text>need to implement google maps here</Text>
+                </Card>
+                <Card
+                    containerStyle={styles.card}
+                    title='What are your days of operation?'
+                    titleStyle={styles.titleSyle}
+                >
+                    
+                </Card>
+                <Card
+                    containerStyle={styles.card}
+                    title='What time are you open on these days?'
                     titleStyle={styles.titleSyle}
                 >
 
                 </Card>
                 <Card
                     containerStyle={styles.card}
-                    title='Manage Queue'
+                    title='some other option'
+                    titleStyle={styles.titleSyle}
+                >
+
+                </Card>
+                <Card
+                    containerStyle={styles.card}
+                    title='some other option'
+                    titleStyle={styles.titleSyle}
+                >
+
+                </Card>
+                <Card
+                    containerStyle={styles.card}
+                    title='some other option'
+                    titleStyle={styles.titleSyle}
+                >
+
+                </Card>
+                <Card
+                    containerStyle={styles.card}
+                    title='some other option'
+                    titleStyle={styles.titleSyle}
+                >
+
+                </Card>
+                <Card
+                    containerStyle={styles.card}
+                    title='some other option'
                     titleStyle={styles.titleSyle}
                 >
 
@@ -30,7 +89,7 @@ export default function AdminSetup() {
 
                 </Card>
             </Card>
-        </View>
+        </KeyboardAwareScrollView>
     )
 }
 
@@ -44,7 +103,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.5,
         shadowRadius: 2,
         marginHorizontal: 4,
-        marginVertical: 6,
+        marginVertical: 10,
     },
     cardContent: {
         marginHorizontal: 18,
@@ -54,4 +113,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         position: "absolute",
     },
+    input: {
+        height: 10
+    }
 })

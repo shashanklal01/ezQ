@@ -27,6 +27,8 @@
     "react-native-gesture-handler": "~1.6.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.1",
     "react-native-material-ripple": "^0.9.1",
+    "react-native-multiple-choice": "0.0.8",
+    "react-native-multiple-select": "^0.5.5",
     "react-native-reanimated": "~1.9.0",
     "react-native-safe-area-context": "^3.0.7",
     "react-native-screens": "~2.9.0",
