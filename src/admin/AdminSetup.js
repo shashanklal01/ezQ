@@ -9,6 +9,10 @@ export default function AdminSetup() {
     const [pharmaName, setPharmaName] = useState("")
     const [days, setDays] = useState([])
 
+    const onSignoutPress = () => {
+        firebase.auth().signOut().then(() => alert("Signout successful!"))
+    }
+
     return (
         <KeyboardAwareScrollView>
             <Card containerStyle={styles.card}>
@@ -37,7 +41,7 @@ export default function AdminSetup() {
                     title='What are your days of operation?'
                     titleStyle={styles.titleSyle}
                 >
-                    
+
                 </Card>
                 <Card
                     containerStyle={styles.card}
@@ -86,10 +90,14 @@ export default function AdminSetup() {
                     title='some other option'
                     titleStyle={styles.titleSyle}
                 >
-
                 </Card>
-            </Card>
-        </KeyboardAwareScrollView>
+                <TouchableOpacity
+                    onPress={() => onSignoutPress()}
+                >
+                    <Text>Signout</Text>
+                </TouchableOpacity>
+            </Card >
+        </KeyboardAwareScrollView >
     )
 }
 
