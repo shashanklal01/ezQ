@@ -5,6 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Home from './src/screens/Home';
 import Login from './src/screens/Login';
 import Signup from './src/screens/Signup';
+import UserStack from './src/components/UserStack';
+import AdminStack from './src/components/AdminStack'
 import { decode, encode } from 'base-64'
 import { firebase } from './src/firebase/config'
 if (!global.btoa) { global.btoa = encode }
@@ -15,6 +17,19 @@ const Stack = createStackNavigator();
 export default function App() {
 
   const [curUser, setCurUser] = useState(null)
+  const [isAdmin, setIsAdmin] = useState(false)
+  const id = firebase.auth().currentUser.uid
+
+  firebase
+    .firestore()
+    .collection('admins')
+    .doc(id)
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        setIsAdmin(true)
+      }
+    })
 
   useEffect(() => {
     firebase
@@ -22,78 +37,35 @@ export default function App() {
       .onAuthStateChanged(user => setCurUser(user))
   }, [])
 
+  const AuthStack = () => {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Signup" component={Signup} />
+      </Stack.Navigator>
+    )
+  }
+
+  const AppStack = () => {
+    return (isAdmin ? <AdminStack /> : <UserStack />)
+  }
+
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        {curUser ? (
-            <Stack.Screen options={{headerShown: false}} name="Home" component={Home} />
+      <Stack.Navigator >
+        {!curUser ? (
+          <Stack.Screen
+            name="Auth"
+            component={AuthStack}
+          />
         ) : (
-          <>
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Signup" component={Signup} />
-          </>
-        )}
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="App"
+              component={AppStack}
+            />
+          )}
       </Stack.Navigator>
     </NavigationContainer>
   );
-
-
-  // return (
-  //   <NavigationContainer>
-  //     {curUser ? (
-  //       <Home />
-  //     ) : (
-  //         <>
-  //           <Stack.Screen name="Login" component={Login} />
-  //           <Stack.Screen name="Signup" component={Signup} />
-  //         </>
-  //       )}
-  //   </NavigationContainer>
-  // )
-
-  // const [loading, setLoading] = useState(true)
-  // const [user, setUser] = useState(null)
-
-  // useEffect(() => {
-  //   const usersRef = firebase.firestore().collection('users');
-  //   firebase.auth().onAuthStateChanged(user => {
-  //     if (user) {
-  //       usersRef
-  //         .doc(user.uid)
-  //         .get()
-  //         .then((document) => {
-  //           const userData = document.data()
-  //           setLoading(false)
-  //           setUser(userData)
-  //         })
-  //         .catch((error) => {
-  //           setLoading(false)
-  //         });
-  //     } else {
-  //       setLoading(false)
-  //     }
-  //   });
-  // }, []);
-
-  // if (loading) {
-  //   return (
-  //     <></>
-  //   )
-  // }
-  // return (
-  //   <NavigationContainer>
-  //     <Stack.Navigator>
-  //       {user ? (
-  //         <Stack.Screen name="Home">
-  //           {props => <Home {...props} extraData={user} />}
-  //         </Stack.Screen>
-  //       ) : (
-  //           <>
-  //             <Stack.Screen name="Login" component={Login} />
-  //             <Stack.Screen name="Signup" component={Signup} />
-  //           </>
-  //         )}
-  //     </Stack.Navigator>
-  //   </NavigationContainer>
-  // );
 }

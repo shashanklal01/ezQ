@@ -3,7 +3,6 @@ import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet, Picker } fr
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { firebase } from '../firebase/config';
 import { Card, Header } from 'react-native-elements';
-import TabNav from '../components/TabNav'
 
 export default function UserHome() {
     const id = firebase.auth().currentUser.uid
@@ -25,21 +24,22 @@ export default function UserHome() {
         <View>
             <KeyboardAwareScrollView>
                 <Header centerComponent={{ text: 'Your Dashboard' }} />
-                {/* <Card
-                    containerStyle={styles.card}
-                    title='What is the name of your pharmacy?'
-                    titleStyle={styles.titleSyle}
-                >
-                    <TextInput
+                <Card containerStyle={styles.card}>
+                    <Card
+                        containerStyle={styles.card}
+                        title='Queues will be displayed here'
+                        titleStyle={styles.titleSyle}
+                    >
+                        {/* <TextInput
                         placeholder='e.g. CVS'
                         autoCorrect={false}
                         inputStyle={styles.input}
                         onChangeText={val => setPharmaName(val)}
                         value={pharmaName}
-                    />
-                </Card> */}
+                    /> */}
+                    </Card>
+                </Card>
             </KeyboardAwareScrollView>
-            <TabNav />
         </View>
     )
 }
