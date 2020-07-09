@@ -24,8 +24,7 @@ export default function UserHome() {
     return (
         <View>
             <KeyboardAwareScrollView>
-                <Header centerComponent={{ text: 'Your Dashboard' }}>
-                </Header>
+                <Header centerComponent={{ text: 'Your Dashboard' }} />
                 {/* <Card
                     containerStyle={styles.card}
                     title='What is the name of your pharmacy?'
