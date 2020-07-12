@@ -2,7 +2,6 @@ import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import Home from './src/screens/Home';
 import Login from './src/screens/Login';
 import Signup from './src/screens/Signup';
 import UserStack from './src/components/UserStack';
