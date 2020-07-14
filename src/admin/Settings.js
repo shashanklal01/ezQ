@@ -6,6 +6,8 @@ import { Card, Header } from 'react-native-elements';
 
 export default function Settings() {
 
+    const [pharmaName, setPharmaName] = useState("")
+
     const onSignoutPress = () => {
         firebase
             .auth()
@@ -15,7 +17,7 @@ export default function Settings() {
     }
 
     return (
-        <KeyboardAwareScrollView style={styles.container}>
+        <KeyboardAwareScrollView>
             <Header centerComponent={{ text: 'Your Profile' }} />
             <Card
                 containerStyle={styles.card}

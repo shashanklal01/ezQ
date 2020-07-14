@@ -17,33 +17,6 @@ export default function App() {
 
   const [curUser, setCurUser] = useState(null)
   const [isAdmin, setIsAdmin] = useState(false)
-  //const id = firebase.auth().currentUser.uid
-  //var adminId = 'cBGY2r0clxMfI66xuZcPngfK8j32'
-  var user = firebase.auth().currentUser;
-
-  // looks like by default, the admin signs in, probably gonna have to fix this
-  var adminid = 'oopsie'
-  var id;
-  // if user exists, get the user id
-  if (user) {
-    id = firebase.auth().currentUser.uid
-  } else {
-    id = adminid;
-  }
-
-  console.log(id);
-
-  
-  firebase
-    .firestore()
-    .collection('admins')
-    .doc(id)
-    .get()
-    .then((doc) => {
-      if (doc.exists) {
-        setIsAdmin(true)
-      }
-    })
 
   useEffect(() => {
     firebase
@@ -61,6 +34,17 @@ export default function App() {
   }
 
   const AppStack = () => {
+    const id = firebase.auth().currentUser.uid
+    firebase
+      .firestore()
+      .collection('admins')
+      .doc(id)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          setIsAdmin(true)
+        }
+      })
     return (isAdmin ? <AdminStack /> : <UserStack />)
   }
 

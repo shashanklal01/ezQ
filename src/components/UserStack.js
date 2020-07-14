@@ -41,7 +41,7 @@ export default function UserStack() {
                 options={{
                     tabBarLabel: 'Home',
                     tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons name="account-settings-outline" color={color} size={size} />
+                        <MaterialCommunityIcons name="account-settings" color={color} size={size} />
                     ),
                 }}
             />

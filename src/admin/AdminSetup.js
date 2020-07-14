@@ -9,12 +9,15 @@ export default function AdminSetup() {
     const [pharmaName, setPharmaName] = useState("")
     const [days, setDays] = useState([])
 
-    const onSignoutPress = () => {
-        firebase.auth().signOut().then(() => alert("Signout successful!"))
+    const onSubmitPress = () => {
+        // DO THE FOLLOWING:
+        // 1. change 'hasSetUp' boolean in the account info stored to 'true'
+        // 2. store all the data from the fields into db
     }
 
     return (
         <KeyboardAwareScrollView>
+            <Header centerComponent={{ text: 'Set Up Your Pharmacy' }} />
             <Card containerStyle={styles.card}>
                 <Card
                     containerStyle={styles.card}
@@ -92,11 +95,13 @@ export default function AdminSetup() {
                 >
                 </Card>
                 <TouchableOpacity
-                    onPress={() => onSignoutPress()}
+                    onPress={() => onSubmitPress()}
+                    style={styles.button}
                 >
-                    <Text>Signout</Text>
+                    <Text style={styles.buttonTitle}>Set Up Your Pharmacy</Text>
                 </TouchableOpacity>
             </Card >
+
         </KeyboardAwareScrollView >
     )
 }
@@ -123,5 +128,20 @@ const styles = StyleSheet.create({
     },
     input: {
         height: 10
+    },
+    button: {
+        backgroundColor: '#788eec',
+        marginLeft: 30,
+        marginRight: 30,
+        marginTop: 20,
+        height: 48,
+        borderRadius: 5,
+        alignItems: "center",
+        justifyContent: 'center'
+    },
+    buttonTitle: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: "bold"
     }
 })

@@ -14,7 +14,7 @@ export default function AdminHome() {
         .collection('admins')
         .doc(id)
         .get()
-        .then((doc) => setHasSetUp(doc.data().hasSetUp))
+        .then(doc => setHasSetUp(doc.data().hasSetUp))
         .catch(error => alert(error))
 
     return (
