@@ -14,8 +14,30 @@ export default function AdminSetup() {
     const onSubmitPress = () => {
         // DO THE FOLLOWING:
         // 1. change 'hasSetUp' boolean in the account info stored to 'true'
-        // 2. store all the data from the fields into db
+        const id = firebase.auth().currentUser.uid
+
+        firebase
+            .firestore()
+            .collection('admins')
+            .doc(id)
+            .update({
+                hasSetUp: true,
+            })
+
+        firebase
+            .firestore()
+            .collection('pharmacies')
+            .doc()
+            .set({
+                pharmaName: pharmaName,
+                days: days,
+                avgWait: avgWait,
+                openTime: openTime,
+            })
+            .then(() => alert("Pharmacy successfully set up!"))
+            .catch(error => alert(error))
     }
+
 
     return (
         <KeyboardAwareScrollView>
@@ -46,7 +68,7 @@ export default function AdminSetup() {
                     title='What are your days of operation?'
                     titleStyle={styles.titleSyle}
                 >
-
+                    
                 </Card>
                 <Card
                     containerStyle={styles.card}

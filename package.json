@@ -26,6 +26,7 @@
     "react-native-elements": "^2.0.4",
     "react-native-gesture-handler": "~1.6.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.1",
+    "react-native-material-dropdown": "^0.11.1",
     "react-native-material-ripple": "^0.9.1",
     "react-native-modal": "^11.5.6",
     "react-native-multiple-choice": "0.0.8",
