@@ -11,6 +11,7 @@ export default function AdminDashboard() {
     const [qName, setQName] = useState("")
     const [time, setTime] = useState([])
     const [autocall, setAutocall] = useState([])
+    const [partySize, setPartySize] = useState([])
 
     const toggleModal = () => {
         setVisible(!visible)
@@ -111,7 +112,20 @@ export default function AdminDashboard() {
 
                         />
                     </Card>
+                    <Card
+                        containerStyle={styles.card}
+                        title='Require party size?'
+                        titleStyle={styles.titleSyle}
+                    >
+                        <MultiSelect
+                            single={true}
+                            items={autocallItems}
+                            uniqueKey="id"
+                            onSelectedItemsChange={(val) => setPartySize(val)}
+                            selectText={`${partySize}`}
 
+                        />
+                    </Card>
 
                     <TouchableOpacity
                         onPress={() => toggleModal()}
