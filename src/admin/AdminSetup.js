@@ -8,7 +8,6 @@ export default function AdminSetup() {
 
     const [pharmaName, setPharmaName] = useState("")
     const [days, setDays] = useState([])
-    const [avgWait, setAvgWait] = useState(0)
     const [openTime, setOpenTime] = useState("")
 
     const onSubmitPress = () => {
@@ -31,8 +30,8 @@ export default function AdminSetup() {
             .set({
                 pharmaName: pharmaName,
                 days: days,
-                avgWait: avgWait,
                 openTime: openTime,
+                queueId: "",
             })
             .then(() => alert("Pharmacy successfully set up!"))
             .catch(error => alert(error))
@@ -77,13 +76,7 @@ export default function AdminSetup() {
                 >
 
                 </Card>
-                <Card
-                    containerStyle={styles.card}
-                    title='Average wait time per customer (min)'
-                    titleStyle={styles.titleSyle}
-                >
-
-                </Card>
+                
                 <Card
                     containerStyle={styles.card}
                     title='some other option'

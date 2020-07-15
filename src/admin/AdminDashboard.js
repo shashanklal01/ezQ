@@ -8,13 +8,44 @@ import MultiSelect from 'react-native-multiple-select';
 
 export default function AdminDashboard() {
     const [visible, setVisible] = useState(false)
-    const [qName, setQName] = useState("")
-    const [time, setTime] = useState([])
-    const [autocall, setAutocall] = useState([])
-    const [partySize, setPartySize] = useState([])
+    const [qName, setQName] = useState(null)
+    const [time, setTime] = useState(null)
+    const [autocall, setAutocall] = useState(null)
+    const [partySize, setPartySize] = useState(null)
 
     const toggleModal = () => {
         setVisible(!visible)
+    }
+
+    const handleSetupQueue = () => {
+        if (!(qName !== null && time !== null && autocall !== null && partySize !== null)) {
+            alert("One of the fields have been left incomplete, please check!")
+            return
+        }
+        firebase
+            .firestore()
+            .collection('queues')
+            .add({
+                maxWaitMinutes: time[0],
+                pharmacyId: "",
+                autocall: autocall[0],
+                partySizeReq: partySize[0],
+                qName: qName,
+                users: [],
+                upNextUser: "",
+                qId: "",
+            })
+            .then((docRef) => {
+                firebase
+                .firestore()
+                .collection('queues')
+                .doc(docRef.id)
+                .update({
+                    qId: docRef.id,
+                })
+                .then(() => alert("Queue successfully created!"))
+            })
+            .catch(error => alert(error))
     }
 
     const autocallItems = [{
@@ -128,7 +159,10 @@ export default function AdminDashboard() {
                     </Card>
 
                     <TouchableOpacity
-                        onPress={() => toggleModal()}
+                        onPress={() => {
+                            handleSetupQueue()
+                            toggleModal()
+                        }}
                         style={styles.button} >
                         <Text style={styles.buttonTitle}>Create New Queue</Text>
                     </TouchableOpacity>
