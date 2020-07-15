@@ -15,7 +15,7 @@ export default function Settings() {
     }
 
     return (
-        <KeyboardAwareScrollView style={styles.container}>
+        <KeyboardAwareScrollView >
             <Header centerComponent={{ text: 'Your Profile' }} />
             <Card
                 containerStyle={styles.card}
@@ -27,7 +27,7 @@ export default function Settings() {
                     autoCorrect={false}
                     inputStyle={styles.input}
                     onChangeText={val => setPharmaName(val)}
-                    value={pharmaName}
+                    //value={pharmaName}
                 />
             </Card>
             <TouchableOpacity
