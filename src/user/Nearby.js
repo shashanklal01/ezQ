@@ -4,6 +4,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { firebase } from '../firebase/config'
 
 export default function Nearby() {
+
     return (
         <Text>Nearby pharmacies page</Text>
     )
