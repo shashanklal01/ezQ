@@ -13,27 +13,36 @@ export default function AdminSetup() {
     const onSubmitPress = () => {
         // DO THE FOLLOWING:
         // 1. change 'hasSetUp' boolean in the account info stored to 'true'
-        const id = firebase.auth().currentUser.uid
-
-        firebase
-            .firestore()
-            .collection('admins')
-            .doc(id)
-            .update({
-                hasSetUp: true,
-            })
 
         firebase
             .firestore()
             .collection('pharmacies')
-            .doc()
-            .set({
+            .add({
                 pharmaName: pharmaName,
                 days: days,
                 openTime: openTime,
                 curQueuesId: [],
+                createdById: "",
             })
-            .then(() => alert("Pharmacy successfully set up!"))
+            .then((docRef) => {
+                const adminId = firebase.auth().currentUser.uid
+                firebase
+                    .firestore()
+                    .collection('admins')
+                    .doc(adminId)
+                    .update({
+                        pharmaId: docRef.id,
+                    })
+                firebase
+                .firestore()
+                .collection('pharmacies')
+                .doc(docRef.id)
+                .update({
+                    createdById: adminId,
+                    hasSetUp: true,
+                })
+                alert("Pharmacy successfully set up!")
+            })
             .catch(error => alert(error))
     }
 
@@ -67,7 +76,7 @@ export default function AdminSetup() {
                     title='What are your days of operation?'
                     titleStyle={styles.titleSyle}
                 >
-                    
+
                 </Card>
                 <Card
                     containerStyle={styles.card}
@@ -76,7 +85,7 @@ export default function AdminSetup() {
                 >
 
                 </Card>
-                
+
                 <Card
                     containerStyle={styles.card}
                     title='some other option'

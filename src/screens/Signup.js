@@ -35,6 +35,7 @@ export default function Signup({ navigation }) {
                             email: email,
                             admin: isAdmin,
                             hasSetUp: false,
+                            pharmaId: ""
                         } : {
                                 id: response.user.uid,
                                 name: name,
