@@ -138,34 +138,24 @@ export default function AdminSetup() {
     },]
 
     const onSubmitPress = () => {
-        // DO THE FOLLOWING:
-        // 1. change 'hasSetUp' boolean in the account info stored to 'true'
-
+        const adminId = firebase.auth().currentUser.uid
         firebase
             .firestore()
             .collection('pharmacies')
             .add({
                 pharmaName: pharmaName,
-                days: days,
-                openTime: openTime,
+                days: 'lol',
+                openTime: 'lol',
                 curQueuesId: [],
-                createdById: "",
+                createdById: adminId,
             })
             .then((docRef) => {
-                const adminId = firebase.auth().currentUser.uid
                 firebase
                     .firestore()
                     .collection('admins')
                     .doc(adminId)
                     .update({
                         pharmaId: docRef.id,
-                    })
-                firebase
-                    .firestore()
-                    .collection('pharmacies')
-                    .doc(docRef.id)
-                    .update({
-                        createdById: adminId,
                         hasSetUp: true,
                     })
                 alert("Pharmacy successfully set up!")
@@ -208,6 +198,7 @@ export default function AdminSetup() {
                     onSelectedItemsChange={(val) => setDays([...days, val])}
                     selectText={`${days}`}
                 />
+                <Text>{days}</Text>
             </Card>
             <Card
                 containerStyle={styles.card}
@@ -220,6 +211,7 @@ export default function AdminSetup() {
                     onSelectedItemsChange={(val) => setOpenTime([...openTime, val])}
                     selectText={`Opens at ${openTime[0]} and closes at ${openTime[1]}`}
                 />
+                <Text>{openTime}</Text>
             </Card>
             <TouchableOpacity
                 onPress={() => onSubmitPress()}

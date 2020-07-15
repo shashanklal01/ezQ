@@ -37,13 +37,13 @@ export default function AdminDashboard() {
             })
             .then((docRef) => {
                 firebase
-                .firestore()
-                .collection('queues')
-                .doc(docRef.id)
-                .update({
-                    qId: docRef.id,
-                })
-                .then(() => alert("Queue successfully created!"))
+                    .firestore()
+                    .collection('queues')
+                    .doc(docRef.id)
+                    .update({
+                        qId: docRef.id,
+                    })
+                    .then(() => alert("Queue successfully created!"))
             })
             .catch(error => alert(error))
     }
@@ -89,6 +89,12 @@ export default function AdminDashboard() {
     return (
         <KeyboardAwareScrollView>
             <Header centerComponent={{ text: 'Your Dashboard' }} />
+            <Card
+                containerStyle={styles.card}
+                title='Queue 1'
+                titleStyle={styles.titleSyle}
+            >
+            </Card>
             <Modal isVisible={visible}>
                 <Card>
                     <Header
