@@ -50,6 +50,7 @@ export default function AdminDashboard() {
                         setQId(docRef.id)
                         storeQRefToPharmacy()
                         alert("Queue successfully created!")
+                        toggleModal()
                     })
             })
             .catch(error => alert(error))
@@ -111,6 +112,8 @@ export default function AdminDashboard() {
         id: 60,
         name: '< 30 min'
     }]
+
+    // need to store cur queues and dynamically map them to the screen
     var curQueues = firebase
         .firestore()
         .collection('pharmacies')
@@ -187,10 +190,7 @@ export default function AdminDashboard() {
                     </Card>
 
                     <TouchableOpacity
-                        onPress={() => {
-                            handleSetupQueue()
-                            toggleModal()
-                        }}
+                        onPress={() => handleSetupQueue()}
                         style={styles.button} >
                         <Text style={styles.buttonTitle}>Create New Queue</Text>
                     </TouchableOpacity>
