@@ -13,6 +13,9 @@ export default function AdminDashboard() {
     const [autocall, setAutocall] = useState(null)
     const [partySize, setPartySize] = useState(null)
 
+    const adminId = firebase.auth().currentUser.uid
+    const [qId, setQId] = useState(null)
+
     const toggleModal = () => {
         setVisible(!visible)
     }
@@ -43,9 +46,32 @@ export default function AdminDashboard() {
                     .update({
                         qId: docRef.id,
                     })
-                    .then(() => alert("Queue successfully created!"))
+                    .then(() => {
+                        setQId(docRef.id)
+                        storeQRefToPharmacy()
+                        alert("Queue successfully created!")
+                    })
             })
             .catch(error => alert(error))
+    }
+
+    const storeQRefToPharmacy = () => {
+        const [pharmaId, setPharmaId] = useState(null)
+        firebase
+            .firestore()
+            .collection('admins')
+            .doc(adminId)
+            .get()
+            .then(doc => {
+                setPharmaId(doc.data().pharmaId)
+                firebase
+                    .firestore()
+                    .collection('pharmacies')
+                    .doc(pharmaId)
+                    .update({
+                        curQueuesId: firebase.firestore.FieldValue.arrayUnion(qId)
+                    })
+            })
     }
 
     const autocallItems = [{
@@ -85,6 +111,10 @@ export default function AdminDashboard() {
         id: 60,
         name: '< 30 min'
     }]
+    var curQueues = firebase
+        .firestore()
+        .collection('pharmacies')
+        .get()
 
     return (
         <KeyboardAwareScrollView>
