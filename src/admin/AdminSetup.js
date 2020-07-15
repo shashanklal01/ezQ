@@ -31,7 +31,7 @@ export default function AdminSetup() {
                 pharmaName: pharmaName,
                 days: days,
                 openTime: openTime,
-                queueId: "",
+                curQueuesId: [],
             })
             .then(() => alert("Pharmacy successfully set up!"))
             .catch(error => alert(error))

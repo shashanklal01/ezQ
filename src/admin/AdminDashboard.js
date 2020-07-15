@@ -26,7 +26,7 @@ export default function AdminDashboard() {
             .firestore()
             .collection('queues')
             .add({
-                maxWaitMinutes: time[0],
+                maxWaitPerCustomer: time[0],
                 pharmacyId: "",
                 autocall: autocall[0],
                 partySizeReq: partySize[0],
@@ -82,16 +82,8 @@ export default function AdminDashboard() {
         name: '< 30 min'
     },
     {
-        id: 45,
-        name: '< 45 min',
-    },
-    {
         id: 60,
-        name: '< 60 min'
-    },
-    {
-        id: 120,
-        name: '< 120 min'
+        name: '< 30 min'
     }]
 
     return (
