@@ -206,8 +206,6 @@ export default function AdminSetup() {
                     items={daysItems}
                     uniqueKey="id"
                     onSelectedItemsChange={(val) => setDays([...days, val])}
-                    selectedItemTextColor="#CCC"
-                    selectedItemIconColor="#CCC"
                     selectText={`${days}`}
                 />
             </Card>
@@ -219,8 +217,8 @@ export default function AdminSetup() {
                 <MultiSelect
                     items={timeItems}
                     uniqueKey="id"
-                    onSelectedItemsChange={(val) => setDays([...days, val])}
-                    selectText={`Opens at ${days[0]} and closes at ${days[1]}`}
+                    onSelectedItemsChange={(val) => setOpenTime([...openTime, val])}
+                    selectText={`Opens at ${openTime[0]} and closes at ${openTime[1]}`}
                 />
             </Card>
             <TouchableOpacity
@@ -229,8 +227,6 @@ export default function AdminSetup() {
             >
                 <Text style={styles.buttonTitle}>Set Up Your Pharmacy</Text>
             </TouchableOpacity>
-
-
         </KeyboardAwareScrollView >
     )
 }
