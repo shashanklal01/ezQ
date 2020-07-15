@@ -42,6 +42,8 @@ export default function Signup({ navigation }) {
                                 admin: isAdmin,
                                 curQueues: [],
                                 commonlyVisited: [],
+                                upNextQueues: [],
+                                missedQueues: [],
                             })
                     .then(() => navigation.navigate('Login'))
                     .catch(error => alert(error))
