@@ -14,7 +14,6 @@ export default function PharmaPage() {
     const handleJoinQueue = () => {
         //  adding a user to a queue for a specific pharmacy
         // (and adding that queue to the list for the user)
-
     }
 
     return (
