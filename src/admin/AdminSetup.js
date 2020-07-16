@@ -144,8 +144,8 @@ export default function AdminSetup() {
             .collection('pharmacies')
             .add({
                 pharmaName: pharmaName,
-                days: 'lol',
-                openTime: 'lol',
+                days: days.toString(),
+                openTime: openTime[0,2].toString(),
                 curQueuesId: [],
                 createdById: adminId,
             })
