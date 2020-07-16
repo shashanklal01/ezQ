@@ -3,7 +3,8 @@ import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet, Picker } fr
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { firebase } from '../firebase/config'
 import { Card, Header } from 'react-native-elements'
-import Modal from 'react-native-modal';
+import Modal from 'react-native-modal'
+
 import MultiSelect from 'react-native-multiple-select';
 
 export default function AdminDashboard() {
@@ -128,7 +129,7 @@ export default function AdminDashboard() {
                 titleStyle={styles.titleSyle}
             >
             </Card>
-            <Modal isVisible={visible}>
+            <Modal visible={visible}>
                 <Card>
                     <Header
                         //leftComponent={{icon: 'arrow-back'}} 
