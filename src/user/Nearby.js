@@ -9,18 +9,17 @@ export default function Nearby() {
 
     const [nearbyPharma, setNearbyPharma] = useState(null)
 
-    // in this, we want to set the array 'nearbyPharma' to an array
-    // of all the nearby pharmacies, basically retrieve this info
-    // from firebase and store into this array
-
     useEffect(() => {
-        
+        // in this, we want to set the array 'nearbyPharma' to an array
+        // of all the nearby pharmacies, basically retrieve this info
+        // from firebase and store into this array
     }, [])
 
     return (
         <View>
             <Header centerComponent={{ text: 'Nearby Pharmacies' }} />
             <FlatList
+                keyExtractor={(item) => item.id}
                 data={nearbyPharma}
                 renderItem={({ item }) => (
                     <Text>Will input stuff from array here</Text>
