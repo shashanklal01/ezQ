@@ -3,13 +3,29 @@ import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet, Picker, } f
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { firebase } from '../firebase/config'
 import { Header } from 'react-native-elements';
+import { FlatList } from 'react-native-gesture-handler';
 
 export default function Nearby() {
 
+    const [nearbyPharma, setNearbyPharma] = useState(null)
+
+    // in this, we want to set the array 'nearbyPharma' to an array
+    // of all the nearby pharmacies, basically retrieve this info
+    // from firebase and store into this array
+
+    useEffect(() => {
+        
+    }, [])
+
     return (
-        <KeyboardAwareScrollView>
+        <View>
             <Header centerComponent={{ text: 'Nearby Pharmacies' }} />
-            <Text>Nearby pharmacies page</Text>
-        </KeyboardAwareScrollView>
+            <FlatList
+                data={nearbyPharma}
+                renderItem={({ item }) => (
+                    <Text>Will input stuff from array here</Text>
+                )}
+            />
+        </View>
     )
 }

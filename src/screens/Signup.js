@@ -46,7 +46,7 @@ export default function Signup({ navigation }) {
                                 upNextQueues: [],
                                 missedQueues: [],
                             })
-                    .then(() => navigation.navigate('Login'))
+                    .then(() => alert("Signup Successful!"))
                     .catch(error => alert(error))
             })
             .catch(error => alert(error))
