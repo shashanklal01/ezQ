@@ -9,35 +9,78 @@ import Modal from 'react-native-modal';
 export default function Nearby() {
 
     const [visible, setVisible] = useState(false)
+    const [qId, setQId] = useState(null)
+
     const [nearbyPharma, setNearbyPharma] = useState([
-        { name: 'pharma 1', id: 1, curCount: 5, time: 10 + ' min' },
-        { name: 'pharma 2', id: 2, curCount: 3, time: 1 + ' min' }
+        { name: 'pharma 1', pharmaId: 1, qId: ['pickup1', 'flu1'], curCount: 5, time: 10 + ' min' },
+        { name: 'pharma 2', pharmaId: 2, qId: ['pickup2', 'flu2'], curCount: 3, time: 1 + ' min' },
     ])
 
     useEffect(() => {
         // in this, we want to set the array 'nearbyPharma' to an array
         // of all the nearby pharmacies, basically retrieve this info
-        // from firebase and store into this array
+        // from firebase and store into this array.
+        // use the preset array on top as an example
     }, [])
 
     const toggleModal = () => {
         setVisible(!visible)
     }
 
+    const handleJoinQueue = () => {
+        //  adding a user to a queue for a specific pharmacy
+        // (and adding that queue to the list for the user)
+
+        var curUser = firebase.auth().currentUser.uid
+        firebase
+            .firestore()
+            .collection('queues')
+            .doc(qId)
+            .update({
+                users: firebase.firestore.FieldValue.arrayUnion(curUser)
+            })
+            .then(() => {
+                firebase
+                    .firestore()
+                    .collection('users')
+                    .doc(curUser)
+                    .update({
+                        curQueues: firebase.firestore.FieldValue.arrayUnion(qId)
+                    })
+                    .then(() => {
+                        toggleModal()
+                        alert("Queue joined successfully!")
+                    })
+                    .catch(error => alert(error))
+            })
+            .catch(error => alert(error))
+    }
+
     return (
         <View>
             <Header centerComponent={{ text: 'Nearby Pharmacies' }} />
             <FlatList
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.pharmaId}
                 data={nearbyPharma}
                 renderItem={({ item }) => (
                     <TouchableOpacity onPress={() => toggleModal()}>
-                        <Text>{item.name}</Text>
+                        <Card containerStyle={styles.cardContent}>
+                            <Text>{item.name}</Text>
+                        </Card>
                         <Modal visible={visible}>
                             <Card containerStyle={styles.card}>
                                 <Text>{item.name}</Text>
                                 <Text>{item.curCount}</Text>
                                 <Text>{item.time}</Text>
+                                <TouchableOpacity
+                                    style={styles.button}
+                                    onPress={() => {
+                                        setQId(item.qId)
+                                        handleJoinQueue()
+                                    }
+                                    }>
+                                    <Text style={styles.buttonTitle}>Join Queue</Text>
+                                </TouchableOpacity>
                                 <TouchableOpacity
                                     onPress={() => toggleModal()}
                                     style={styles.button}>
