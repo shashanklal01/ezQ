@@ -32,6 +32,30 @@ export default function Settings() {
                     value={pharmaName}
                 />
             </Card>
+            <Card
+                containerStyle={styles.card}
+                title='What is the Address (Address, City, State, ZIP code)?'
+                titleStyle={styles.titleSyle}
+            >
+                <TextInput
+                    placeholder='Address, City, State, ZIP code'
+                    autoCorrect={false}
+                    inputStyle={styles.input}
+                    onChangeText={val => setPharmaName(val)}
+                    value={pharmaName}
+                />
+            </Card>
+            <Card
+                containerStyle={styles.card}
+                title='Cover Picture'
+                titleStyle={styles.titleSyle}
+            >
+                <TouchableOpacity
+                    style={styles.buttonSmall}
+                    onPress={() => onSignupPress()}> {/*NEEDS TO ACCESS PHONE'S GALLERY*/}
+                    <Text style={styles.buttonTitle}>Choose Photo</Text>
+                </TouchableOpacity>
+            </Card>
             <TouchableOpacity
                 onPress={() => onSignoutPress()}
                 style={styles.button}
@@ -82,6 +106,15 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 16,
         fontWeight: "bold"
+    },
+    buttonSmall: {
+        backgroundColor: '#b3b3b3',
+        marginLeft: 80,
+        marginRight: 80,
+        height: 30,
+        borderRadius: 5,
+        alignItems: "center",
+        justifyContent: 'center'
     },
     footerView: {
         flex: 1,

@@ -40,7 +40,7 @@ export default function Signup({ navigation }) {
                                 id: response.user.uid,
                                 name: name,
                                 email: email,
-                                admin: isAdmin,
+                                admin: false,
                                 curQueues: [],
                                 commonlyVisited: [],
                                 upNextQueues: [],

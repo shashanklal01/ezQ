@@ -19,14 +19,27 @@ export default function Settings() {
             <Header centerComponent={{ text: 'Your Profile' }} />
             <Card
                 containerStyle={styles.card}
-                title='What is the name of your pharmacy?'
+                title='Name'
                 titleStyle={styles.titleSyle}
             >
                 <TextInput
-                    placeholder='e.g. CVS'
+                    placeholder='e.g. John Smith'
                     autoCorrect={false}
                     inputStyle={styles.input}
-                    onChangeText={val => setPharmaName(val)}
+                    onChangeText={val => setPharmaName(val)} //setName
+                    //value={pharmaName}
+                />
+            </Card>
+            <Card
+                containerStyle={styles.card}
+                title='Phone Number'
+                titleStyle={styles.titleSyle}
+            >
+                <TextInput
+                    placeholder='e.g. 123-456-7890'
+                    autoCorrect={false}
+                    inputStyle={styles.input}
+                    onChangeText={val => setPharmaName(val)} //setPhoneNumber
                     //value={pharmaName}
                 />
             </Card>

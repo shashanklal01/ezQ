@@ -12,128 +12,128 @@ export default function AdminSetup() {
     const [openTime, setOpenTime] = useState("")
 
     const daysItems = [{
-        id: 'monday',
+        id: ' Mon ',
         name: 'Monday'
     },
     {
-        id: 'tuesday',
+        id: ' Tues ',
         name: 'Tuesday',
     },
     {
-        id: 'wednesday',
+        id: ' Wed ',
         name: 'Wednesday',
     },
     {
-        id: 'thursday',
+        id: ' Thur ',
         name: 'Thursday',
     },
     {
-        id: 'friday',
+        id: ' Fri ',
         name: 'Friday',
     },
     {
-        id: 'saturday',
+        id: ' Sat ',
         name: 'Saturday',
     },
     {
-        id: 'sunday',
+        id: ' Sun ',
         name: 'Sunday',
     }]
 
     const timeItems = [{
-        id: '00:00',
+        id: '00:00 ',
         name: '12 am'
     },
     {
-        id: '01:00',
+        id: '01:00 ',
         name: '1 am'
     },
     {
-        id: '02:00',
+        id: '02:00 ',
         name: '2 am'
     },
     {
-        id: '03:00',
+        id: '03:00 ',
         name: '3 am'
     },
     {
-        id: '04:00',
+        id: '04:00 ',
         name: '4 am'
     },
     {
-        id: '05:00',
+        id: '05:00 ',
         name: '5 am'
     },
     {
-        id: '06:00',
+        id: '06:00 ',
         name: '6 am'
     },
     {
-        id: '07:00',
+        id: '07:00 ',
         name: '7 am'
     },
     {
-        id: '08:00',
+        id: '08:00 ',
         name: '8 am'
     },
     {
-        id: '09:00',
+        id: '09:00 ',
         name: '9 am'
     },
     {
-        id: '10:00',
+        id: '10:00 ',
         name: '10 am'
     },
     {
-        id: '11:00',
+        id: '11:00 ',
         name: '11 am'
     },
     {
-        id: '12:00',
+        id: '12:00 ',
         name: '12 pm'
     },
     {
-        id: '13:00',
+        id: '13:00 ',
         name: '1 pm'
     },
     {
-        id: '14:00',
+        id: '14:00 ',
         name: '2 pm'
     },
     {
-        id: '15:00',
+        id: '15:00 ',
         name: '3 pm'
     },
     {
-        id: '16:00',
+        id: '16:00 ',
         name: '4 pm'
     },
     {
-        id: '17:00',
+        id: '17:00 ',
         name: '5 pm'
     },
     {
-        id: '18:00',
+        id: '18:00 ',
         name: '6 pm'
     },
     {
-        id: '19:00',
+        id: '19:00 ',
         name: '7 pm'
     },
     {
-        id: '20:00',
+        id: '20:00 ',
         name: '8 pm'
     },
     {
-        id: '21:00',
+        id: '21:00 ',
         name: '9 pm'
     },
     {
-        id: '22:00',
+        id: '22:00 ',
         name: '10 pm'
     },
     {
-        id: '23:00',
+        id: '23:00 ',
         name: '11 pm'
     },]
 
@@ -182,10 +182,16 @@ export default function AdminSetup() {
             </Card>
             <Card
                 containerStyle={styles.card}
-                title='Where are you located?'
+                title='What is the address? (Address, City, State, and ZIP code)'
                 titleStyle={styles.titleSyle}
             >
-                <Text>need to implement google maps here</Text>
+                <TextInput
+                    placeholder='Address, City, State, ZIP code'
+                    autoCorrect={false}
+                    inputStyle={styles.input}
+                    onChangeText={val => setPharmaName(val)} //setAddress
+                    value={pharmaName}
+                />
             </Card>
             <Card
                 containerStyle={styles.card}
