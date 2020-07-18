@@ -121,7 +121,7 @@ export default function AdminDashboard() {
 
     return (
         <KeyboardAwareScrollView>
-            <Header centerComponent={{ text: 'Your Dashboard' }} />
+            <Header centerComponent={{ text: 'Your Dashboard', style: { color: '#fff' } }} />
             <Card
                 containerStyle={styles.card}
                 title='Queue 1'

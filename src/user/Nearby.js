@@ -58,7 +58,7 @@ export default function Nearby() {
 
     return (
         <View>
-            <Header centerComponent={{ text: 'Nearby Pharmacies' }} />
+            <Header centerComponent={{ text: 'Nearby Pharmacies', style: { color: '#fff' } }} />
             <FlatList
                 keyExtractor={(item) => item.pharmaId}
                 data={nearbyPharma}
@@ -69,9 +69,9 @@ export default function Nearby() {
                         </Card>
                         <Modal isVisible={visible}>
                             <Card containerStyle={styles.card}>
-                                <Text>{item.name}</Text>
-                                <Text>{item.curCount}</Text>
-                                <Text>{item.time}</Text>
+                                <Text style={styles.cardContent}>{item.name}</Text>
+                                <Text style={styles.cardContent}>{item.curCount}</Text>
+                                <Text style={styles.cardContent}>Approximately {item.time} of wait time</Text>
                                 <TouchableOpacity
                                     style={styles.button}
                                     onPress={() => {

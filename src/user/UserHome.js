@@ -10,7 +10,7 @@ import Modal from 'react-native-modal';
 export default function UserHome() {
     const id = firebase.auth().currentUser.uid;
     const [qName, setQName] = useState("");
-    const [queues, setQueues] = useState([]);
+    const [queues, setQueues] = useState(null)
     const [queue, setQueue] = useState(null)
     const [queueDetails, setQueueDetails] = useState(null)
     const [visible, setVisible] = useState(false)
@@ -93,32 +93,37 @@ export default function UserHome() {
     return (
         <View>
             <KeyboardAwareScrollView>
-                <Header centerComponent={{ text: 'Your Dashboard' }} />
+                <Header centerComponent={{ text: 'Your Dashboard', style: { color: '#fff' } }} />
                 <Card containerStyle={styles.card}>
-                    <Card
-                        containerStyle={styles.card}
-                        title='Queues will be displayed here'
-                        titleStyle={styles.titleSyle}
-                    >
-                        {/* loop through queues state and display queues */}
-                        <FlatList
-                            data={queues}
-                            renderItem={({ item }) => (
-                                <TouchableOpacity onPress={() => toggleModal()}>
-                                    <Card containerStyle={styles.cardContent}>
-                                        <Text>{getQName(item)}</Text>
-                                    </Card>
-                                    <Modal isVisible={visible}>
-                                        <Card containerStyle={styles.card}>
+                    {!queues ? (
+                        <View>
+                            <Text style={styles.cardContent}>You are currently not in any queues!</Text>
+                            <Text style={styles.cardContent}>To join one, head onto the Nearby Tab!</Text>
+                        </View>
+                    ) : (
+                            <FlatList
+                                data={queues}
+                                renderItem={({ item }) => (
+                                    <TouchableOpacity onPress={() => toggleModal()}>
+                                        <Card containerStyle={styles.cardContent}>
                                             <Text>{getQName(item)}</Text>
-                                            <Text>{getPharmaName(item)}</Text>
-                                            <Text>{getWaitTime(item)}</Text>
                                         </Card>
-                                    </Modal>
-                                </TouchableOpacity>
-                            )}
-                        />
-                    </Card>
+                                        <Modal isVisible={visible}>
+                                            <Card containerStyle={styles.card}>
+                                                <Text>{getQName(item)}</Text>
+                                                <Text>{getPharmaName(item)}</Text>
+                                                <Text>{getWaitTime(item)}</Text>
+                                            </Card>
+                                            <TouchableOpacity
+                                                onPress={() => toggleModal()}
+                                                style={styles.button}>
+                                                <Text style={styles.buttonTitle}>Go back</Text>
+                                            </TouchableOpacity>
+                                        </Modal>
+                                    </TouchableOpacity>
+                                )}
+                            />
+                        )}
                 </Card>
             </KeyboardAwareScrollView>
         </View>
