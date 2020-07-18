@@ -13,20 +13,49 @@ export default function Settings() {
             .then(() => alert("Signout successful"))
             .catch(error => alert(error))
     }
+    const [userName, setUserName] = useState("")
+    const [userNumber, setUserNumber] = useState("")
+    const [userEmail, setUserEmail] = useState("")
 
     return (
         <KeyboardAwareScrollView >
             <Header centerComponent={{ text: 'Your Profile', style: { color: '#fff' } }} />
             <Card
                 containerStyle={styles.card}
-                title='What is the name of your pharmacy?'
+                title='Name'
                 titleStyle={styles.titleSyle}
             >
                 <TextInput
-                    placeholder='e.g. CVS'
+                    placeholder='e.g. John Smith'
                     autoCorrect={false}
                     inputStyle={styles.input}
-                    onChangeText={val => setPharmaName(val)}
+                    onChangeText={val => setUserName(val)}
+                    //value={pharmaName}
+                />
+            </Card>
+            <Card
+                containerStyle={styles.card}
+                title='Phone Number (optional)'
+                titleStyle={styles.titleSyle}
+            >
+                <TextInput
+                    placeholder='e.g. 123-456-7890'
+                    autoCorrect={false}
+                    inputStyle={styles.input}
+                    onChangeText={val => setUserNumber(val)}
+                    //value={pharmaName}
+                />
+            </Card>
+            <Card
+                containerStyle={styles.card}
+                title='Email (optional)'
+                titleStyle={styles.titleSyle}
+            >
+                <TextInput
+                    placeholder='e.g. abc@ezQ.com'
+                    autoCorrect={false}
+                    inputStyle={styles.input}
+                    onChangeText={val => setUserEmail(val)}
                     //value={pharmaName}
                 />
             </Card>

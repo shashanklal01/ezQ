@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet, Picker } from 'react-native'
+import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet, Picker, ScrollView } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { firebase } from '../firebase/config'
 
@@ -57,6 +57,7 @@ export default function Signup({ navigation }) {
             <KeyboardAwareScrollView
                 style={{ flex: 1, width: '100%' }}
                 keyboardShouldPersistTaps="always">
+                <ScrollView>
                 <Image
                     style={styles.logo}
                     source={require('../../assets/logo.png')}
@@ -122,6 +123,7 @@ export default function Signup({ navigation }) {
                 <View style={styles.footerView}>
                     <Text style={styles.footerText}>Already got an account? <Text onPress={() => onLoginPress()} style={styles.footerLink}>Log in</Text></Text>
                 </View>
+                </ScrollView>
             </KeyboardAwareScrollView>
         </View>
     )

@@ -5,6 +5,7 @@ import { firebase } from '../firebase/config'
 import { Card, Header } from 'react-native-elements'
 import Modal from 'react-native-modal'
 import MultiSelect from 'react-native-multiple-select';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default function AdminDashboard() {
     const [visible, setVisible] = useState(false)
@@ -128,7 +129,8 @@ export default function AdminDashboard() {
                 titleStyle={styles.titleSyle}
             >
             </Card>
-            <Modal visible={visible}>
+            <Modal visible={visible} propagateSwipe={true}>
+                <ScrollView>
                 <Card>
                     <Header
                         //leftComponent={{icon: 'arrow-back'}} 
@@ -200,6 +202,7 @@ export default function AdminDashboard() {
                         <Text style={styles.buttonTitle}>Return to Dashboard</Text>
                     </TouchableOpacity>
                 </Card>
+                </ScrollView>
             </Modal>
             <TouchableOpacity
                 onPress={() => toggleModal()}
