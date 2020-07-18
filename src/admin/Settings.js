@@ -7,6 +7,7 @@ import { Card, Header } from 'react-native-elements';
 export default function Settings() {
 
     const [pharmaName, setPharmaName] = useState("")
+    const [pharmaAddress, setPharmaAddress] = useState("")
 
     const onSignoutPress = () => {
         firebase
@@ -41,8 +42,8 @@ export default function Settings() {
                     placeholder='Address, City, State, ZIP code'
                     autoCorrect={false}
                     inputStyle={styles.input}
-                    onChangeText={val => setPharmaName(val)}
-                    value={pharmaName}
+                    onChangeText={val => setPharmaAddress(val)}
+                    value={pharmaAddress}
                 />
             </Card>
             <Card
@@ -65,6 +66,7 @@ export default function Settings() {
         </KeyboardAwareScrollView>
     )
 }
+
 
 const styles = StyleSheet.create({
     container: {

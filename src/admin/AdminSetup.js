@@ -8,6 +8,7 @@ import MultiSelect from 'react-native-multiple-select';
 export default function AdminSetup() {
 
     const [pharmaName, setPharmaName] = useState("")
+    const [pharmaAddress, setPharmaAddress] = useState("")
     const [days, setDays] = useState([])
     const [openTime, setOpenTime] = useState("")
 
@@ -189,8 +190,8 @@ export default function AdminSetup() {
                     placeholder='Address, City, State, ZIP code'
                     autoCorrect={false}
                     inputStyle={styles.input}
-                    onChangeText={val => setPharmaName(val)} //setAddress
-                    value={pharmaName}
+                    onChangeText={val => setPharmaAddress(val)} 
+                    value={pharmaAddress}
                 />
             </Card>
             <Card
