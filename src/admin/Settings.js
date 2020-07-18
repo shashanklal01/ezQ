@@ -53,7 +53,7 @@ export default function Settings() {
             >
                 <TouchableOpacity
                     style={styles.buttonSmall}
-                    onPress={() => onSignupPress()}> {/*NEEDS TO ACCESS PHONE'S GALLERY*/}
+                    onPress={() => onSignupPress()}>
                     <Text style={styles.buttonTitle}>Choose Photo</Text>
                 </TouchableOpacity>
             </Card>

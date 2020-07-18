@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet, Picker } from 'react-native'
+import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet, Picker, ScrollView} from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { firebase } from '../firebase/config'
 
@@ -59,7 +59,7 @@ export default function Signup({ navigation }) {
                 keyboardShouldPersistTaps="always">
                 <Image
                     style={styles.logo}
-                //LOGO: source={require('../../../assets/icon.png')}
+                    source={require('src/assets/icon.png')}
                 />
                 <TextInput
                     style={styles.input}
