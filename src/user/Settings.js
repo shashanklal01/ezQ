@@ -19,7 +19,7 @@ export default function Settings() {
 
     return (
         <KeyboardAwareScrollView >
-            <Header centerComponent={{ text: 'Your Profile' }} />
+            <Header centerComponent={{ text: 'Your Profile', style: { color: '#fff' } }} />
             <Card
                 containerStyle={styles.card}
                 title='Name'

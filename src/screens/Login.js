@@ -41,7 +41,7 @@ export default function Login({ navigation }) {
                 keyboardShouldPersistTaps="always">
                 <Image
                     style={styles.logo}
-                //LOGO: source={require('../../../assets/icon.png')}
+                    source={require('../../assets/logo.png')}
                 />
                 <TextInput
                     keyboardType='email-address'
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     logo: {
         flex: 1,
         height: 120,
-        width: 90,
+        width: 170,
         alignSelf: "center",
         margin: 30
     },

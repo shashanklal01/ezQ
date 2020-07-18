@@ -60,7 +60,7 @@ export default function Signup({ navigation }) {
                 <ScrollView>
                 <Image
                     style={styles.logo}
-                //LOGO: source={require('../../../assets/icon.png')}
+                    source={require('../../assets/logo.png')}
                 />
                 <TextInput
                     style={styles.input}
@@ -139,8 +139,8 @@ const styles = StyleSheet.create({
     },
     logo: {
         flex: 1,
-        height: 100,
-        width: 90,
+        height: 80,
+        width: 170,
         alignSelf: "center",
         margin: 30
     },

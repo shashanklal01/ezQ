@@ -167,7 +167,7 @@ export default function AdminSetup() {
 
     return (
         <KeyboardAwareScrollView>
-            <Header centerComponent={{ text: 'Set Up Your Pharmacy' }} />
+            <Header centerComponent={{ text: 'Set Up Your Pharmacy', style: { color: '#fff' } }} />
             <Card
                 containerStyle={styles.card}
                 title='What is the name of your pharmacy?'
