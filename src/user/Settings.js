@@ -13,6 +13,9 @@ export default function Settings() {
             .then(() => alert("Signout successful"))
             .catch(error => alert(error))
     }
+    const [userName, setUserName] = useState("")
+    const [userNumber, setUserNumber] = useState("")
+    const [userEmail, setUserEmail] = useState("")
 
     return (
         <KeyboardAwareScrollView >
@@ -26,20 +29,33 @@ export default function Settings() {
                     placeholder='e.g. John Smith'
                     autoCorrect={false}
                     inputStyle={styles.input}
-                    onChangeText={val => setPharmaName(val)} //setName
+                    onChangeText={val => setUserName(val)}
                     //value={pharmaName}
                 />
             </Card>
             <Card
                 containerStyle={styles.card}
-                title='Phone Number'
+                title='Phone Number (optional)'
                 titleStyle={styles.titleSyle}
             >
                 <TextInput
                     placeholder='e.g. 123-456-7890'
                     autoCorrect={false}
                     inputStyle={styles.input}
-                    onChangeText={val => setPharmaName(val)} //setPhoneNumber
+                    onChangeText={val => setUserNumber(val)}
+                    //value={pharmaName}
+                />
+            </Card>
+            <Card
+                containerStyle={styles.card}
+                title='Email (optional)'
+                titleStyle={styles.titleSyle}
+            >
+                <TextInput
+                    placeholder='e.g. abc@ezQ.com'
+                    autoCorrect={false}
+                    inputStyle={styles.input}
+                    onChangeText={val => setUserEmail(val)}
                     //value={pharmaName}
                 />
             </Card>

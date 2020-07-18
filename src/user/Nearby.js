@@ -65,13 +65,17 @@ export default function Nearby() {
                 renderItem={({ item }) => (
                     <TouchableOpacity onPress={() => toggleModal()}>
                         <Card containerStyle={styles.cardContent}>
-                            <Text>{item.name}</Text>
+                            <Text style={styles.pharmName}>{item.name}</Text>
+                            {/*need to add address*/}
+                            <Text>{item.curCount} people in queue</Text>
+                                <Text>{item.time} avg. wait time</Text>
                         </Card>
                         <Modal visible={visible}>
                             <Card containerStyle={styles.card}>
-                                <Text>{item.name}</Text>
-                                <Text>{item.curCount}</Text>
-                                <Text>{item.time}</Text>
+                                <Text style={styles.pharmName}>{item.name}</Text>
+                                {/*need to add address*/}
+                                <Text>{item.curCount} people in queue</Text>
+                                <Text>{item.time} avg. wait time</Text>
                                 <TouchableOpacity
                                     style={styles.button}
                                     onPress={() => {
@@ -117,6 +121,10 @@ const styles = StyleSheet.create({
     },
     input: {
         height: 10
+    },
+    pharmName:{
+        fontSize: 16,
+        marginVertical: 10
     },
     button: {
         backgroundColor: '#788eec',
