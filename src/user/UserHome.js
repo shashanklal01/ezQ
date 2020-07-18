@@ -1,12 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet, Picker } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { firebase } from '../firebase/config';
 import { Card, Header } from 'react-native-elements';
+import { handleQueryId } from "../util/index.js";
+
 
 export default function UserHome() {
-    const id = firebase.auth().currentUser.uid
-    const [name, setName] = useState("")
+    const id = firebase.auth().currentUser.uid;
+    const [name, setName] = useState("");
+    const [queues, setQueues] = useState("");
+
+    //Gets called once the application renders
+    useEffect(() => {
+        //changes the state of queues to whats returned from handleQueryId
+        setQueues(handleQueryId("1fied8DyP6JWAMoSpHFK"));
+    })
 
     firebase
         .firestore()
@@ -18,9 +27,8 @@ export default function UserHome() {
         })
 
     //var curQueues = data.map(name, )
-
-
     return (
+        
         <View>
             <KeyboardAwareScrollView>
                 <Header centerComponent={{ text: 'Your Dashboard' }} />
@@ -30,6 +38,7 @@ export default function UserHome() {
                         title='Queues will be displayed here'
                         titleStyle={styles.titleSyle}
                     >
+                        {/* loop through queues state and display queues */}
                         {/* <TextInput
                         placeholder='e.g. CVS'
                         autoCorrect={false}

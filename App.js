@@ -8,6 +8,7 @@ import UserStack from './src/components/UserStack';
 import AdminStack from './src/components/AdminStack'
 import { decode, encode } from 'base-64'
 import { firebase } from './src/firebase/config'
+
 if (!global.btoa) { global.btoa = encode }
 if (!global.atob) { global.atob = decode }
 
@@ -18,10 +19,36 @@ export default function App() {
   const [curUser, setCurUser] = useState(null)
   const [isAdmin, setIsAdmin] = useState(false)
 
+  //const id = firebase.auth().currentUser.uid
+  //var adminId = 'cBGY2r0clxMfI66xuZcPngfK8j32'
+  var user = firebase.auth().currentUser;
+
+  // looks like by default, the admin signs in, probably gonna have to fix this
+  var adminid = 'oopsie'
+  var id;
+  // if user exists, get the user id
+  if (user) {
+    id = firebase.auth().currentUser.uid
+  } else {
+    id = adminid;
+  }
+  
+  firebase
+    .firestore()
+    .collection('admins')
+    .doc(id)
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        setIsAdmin(true)
+      }
+    })
+
   useEffect(() => {
     firebase
       .auth()
       .onAuthStateChanged(user => setCurUser(user))
+
   }, [])
 
   const AuthStack = () => {
