@@ -11,7 +11,7 @@ export default function UserHome() {
     const [name, setName] = useState("");
     const [queues, setQueues] = useState("");
 
-    //Gets called once the application renders
+    // Gets called once the application renders
     useEffect(() => {
         //changes the state of queues to whats returned from handleQueryId
         setQueues(handleQueryId("1fied8DyP6JWAMoSpHFK"));
