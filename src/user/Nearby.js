@@ -21,6 +21,7 @@ export default function Nearby() {
         // of all the nearby pharmacies, basically retrieve this info
         // from firebase and store into this array.
         // use the preset array on top as an example
+        
     }, [])
 
     const toggleModal = () => {
@@ -66,14 +67,14 @@ export default function Nearby() {
                     <TouchableOpacity onPress={() => toggleModal()}>
                         <Card containerStyle={styles.cardContent}>
                             <Text style={styles.pharmName}>{item.name}</Text>
-                            {/*need to add address*/}
+                            <Text>{item.pharmaAddress}</Text>
                             <Text>{item.curCount} people in queue</Text>
-                                <Text>{item.time} avg. wait time</Text>
+                            <Text>{item.time} avg. wait time</Text>
                         </Card>
                         <Modal isVisible={visible}>
                             <Card containerStyle={styles.card}>
                                 <Text style={styles.pharmName}>{item.name}</Text>
-                                {/*need to add address*/}
+                                <Text>{item.pharmaAddress}</Text>
                                 <Text>{item.curCount} people in queue</Text>
                                 <Text style={styles.cardContent}>Approximately {item.time} of wait time</Text>
                                 <TouchableOpacity
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
     input: {
         height: 10
     },
-    pharmName:{
+    pharmName: {
         fontSize: 16,
         marginVertical: 10
     },

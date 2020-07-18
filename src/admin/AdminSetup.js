@@ -146,9 +146,10 @@ export default function AdminSetup() {
             .add({
                 pharmaName: pharmaName,
                 days: days.toString(),
-                openTime: openTime[0,2].toString(),
+                openTime: openTime.toString(),
                 curQueuesId: [],
                 createdById: adminId,
+                pharmaAddress: pharmaAddress,
             })
             .then((docRef) => {
                 firebase
@@ -205,7 +206,6 @@ export default function AdminSetup() {
                     onSelectedItemsChange={(val) => setDays([...days, val])}
                     selectText={`${days}`}
                 />
-                <Text>{days}</Text>
             </Card>
             <Card
                 containerStyle={styles.card}
@@ -218,7 +218,6 @@ export default function AdminSetup() {
                     onSelectedItemsChange={(val) => setOpenTime([...openTime, val])}
                     selectText={`Opens at ${openTime[0]} and closes at ${openTime[1]}`}
                 />
-                <Text>{openTime}</Text>
             </Card>
             <TouchableOpacity
                 onPress={() => onSubmitPress()}

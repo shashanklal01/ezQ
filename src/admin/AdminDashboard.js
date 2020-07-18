@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet, Picker } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { firebase } from '../firebase/config'
 import { Card, Header } from 'react-native-elements'
 import Modal from 'react-native-modal'
 import MultiSelect from 'react-native-multiple-select';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, FlatList } from 'react-native-gesture-handler';
 
 export default function AdminDashboard() {
     const [visible, setVisible] = useState(false)
@@ -13,9 +13,10 @@ export default function AdminDashboard() {
     const [time, setTime] = useState(null)
     const [autocall, setAutocall] = useState(null)
     const [partySize, setPartySize] = useState(null)
-
+    const [queues, setQueues] = useState(null)
     const adminId = firebase.auth().currentUser.uid
     const [qId, setQId] = useState(null)
+    const [pharmaId, setPharmaId] = useState(null)
 
     const toggleModal = () => {
         setVisible(!visible)
@@ -58,7 +59,6 @@ export default function AdminDashboard() {
     }
 
     const storeQRefToPharmacy = () => {
-        const [pharmaId, setPharmaId] = useState(null)
         firebase
             .firestore()
             .collection('admins')
@@ -114,94 +114,98 @@ export default function AdminDashboard() {
         name: '< 30 min'
     }]
 
-    // need to store cur queues and dynamically map them to the screen
-    var curQueues = firebase
-        .firestore()
-        .collection('pharmacies')
-        .get()
+    const showQueueDetails = () => {
+
+    }
+
+    useEffect(() => {
+        // get all queues of this pharmacy
+    }, [])
 
     return (
         <KeyboardAwareScrollView>
             <Header centerComponent={{ text: 'Your Dashboard', style: { color: '#fff' } }} />
-            <Card
-                containerStyle={styles.card}
-                title='Queue 1'
-                titleStyle={styles.titleSyle}
-            >
-            </Card>
+            <FlatList
+                data={queues}
+                renderItem={({ item }) => (
+                    <TouchableOpacity onPress={() => showQueueDetails()}>
+
+                    </TouchableOpacity>
+                )}
+            />
             <Modal visible={visible} propagateSwipe={true}>
                 <ScrollView>
-                <Card>
-                    <Header
-                        //leftComponent={{icon: 'arrow-back'}} 
-                        centerComponent={{ text: 'New Queue' }} />
+                    <Card>
+                        <Header
+                            //leftComponent={{icon: 'arrow-back'}} 
+                            centerComponent={{ text: 'New Queue' }} />
 
-                    <Card
-                        containerStyle={styles.card}
-                        title='Give your queue a name'
-                        titleStyle={styles.titleSyle}
-                    >
-                        <TextInput
-                            placeholder='e.g. Pickup, Flu Shot etc.'
-                            autoCorrect={false}
-                            inputStyle={styles.input}
-                            onChangeText={val => setQName(val)}
-                            value={qName}
-                        />
-                    </Card>
-                    <Card
-                        containerStyle={styles.card}
-                        title='Average wait time per customer'
-                        titleStyle={styles.titleSyle}
-                    >
-                        <MultiSelect
-                            single={true}
-                            items={timeItems}
-                            uniqueKey="id"
-                            onSelectedItemsChange={(val) => setTime(val)}
-                            selectText={`< ${time} min`}
-                        />
-                    </Card>
-                    <Card
-                        containerStyle={styles.card}
-                        title='Autocall customers?'
-                        titleStyle={styles.titleSyle}
-                    >
-                        <MultiSelect
-                            single={true}
-                            items={autocallItems}
-                            uniqueKey="id"
-                            onSelectedItemsChange={(val) => setAutocall(val)}
-                            selectText={`${autocall}`}
+                        <Card
+                            containerStyle={styles.card}
+                            title='Give your queue a name'
+                            titleStyle={styles.titleSyle}
+                        >
+                            <TextInput
+                                placeholder='e.g. Pickup, Flu Shot etc.'
+                                autoCorrect={false}
+                                inputStyle={styles.input}
+                                onChangeText={val => setQName(val)}
+                                value={qName}
+                            />
+                        </Card>
+                        <Card
+                            containerStyle={styles.card}
+                            title='Average wait time per customer'
+                            titleStyle={styles.titleSyle}
+                        >
+                            <MultiSelect
+                                single={true}
+                                items={timeItems}
+                                uniqueKey="id"
+                                onSelectedItemsChange={(val) => setTime(val)}
+                                selectText={`< ${time} min`}
+                            />
+                        </Card>
+                        <Card
+                            containerStyle={styles.card}
+                            title='Autocall customers?'
+                            titleStyle={styles.titleSyle}
+                        >
+                            <MultiSelect
+                                single={true}
+                                items={autocallItems}
+                                uniqueKey="id"
+                                onSelectedItemsChange={(val) => setAutocall(val)}
+                                selectText={`${autocall}`}
 
-                        />
-                    </Card>
-                    <Card
-                        containerStyle={styles.card}
-                        title='Require party size?'
-                        titleStyle={styles.titleSyle}
-                    >
-                        <MultiSelect
-                            single={true}
-                            items={autocallItems}
-                            uniqueKey="id"
-                            onSelectedItemsChange={(val) => setPartySize(val)}
-                            selectText={`${partySize}`}
+                            />
+                        </Card>
+                        <Card
+                            containerStyle={styles.card}
+                            title='Require party size?'
+                            titleStyle={styles.titleSyle}
+                        >
+                            <MultiSelect
+                                single={true}
+                                items={autocallItems}
+                                uniqueKey="id"
+                                onSelectedItemsChange={(val) => setPartySize(val)}
+                                selectText={`${partySize}`}
 
-                        />
-                    </Card>
+                            />
+                        </Card>
 
-                    <TouchableOpacity
-                        onPress={() => handleSetupQueue()}
-                        style={styles.button} >
-                        <Text style={styles.buttonTitle}>Create New Queue</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => toggleModal()}
-                        style={styles.button} >
-                        <Text style={styles.buttonTitle}>Return to Dashboard</Text>
-                    </TouchableOpacity>
-                </Card>
+                        <TouchableOpacity
+                            onPress={() => handleSetupQueue()}
+                            style={styles.button} >
+                            <Text style={styles.buttonTitle}>Create New Queue</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => toggleModal()}
+                            style={styles.button} >
+                            <Text style={styles.buttonTitle}>Return to Dashboard</Text>
+                        </TouchableOpacity>
+                    </Card>
                 </ScrollView>
             </Modal>
             <TouchableOpacity
@@ -210,7 +214,7 @@ export default function AdminDashboard() {
             >
                 <Text style={styles.buttonTitle}>Set Up A New Queue</Text>
             </TouchableOpacity>
-        </KeyboardAwareScrollView>
+        </KeyboardAwareScrollView >
     )
 }
 
