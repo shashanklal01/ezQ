@@ -4,7 +4,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { firebase } from '../firebase/config'
 import { Card, Header } from 'react-native-elements'
 import Modal from 'react-native-modal'
-
 import MultiSelect from 'react-native-multiple-select';
 
 export default function AdminDashboard() {
@@ -31,7 +30,7 @@ export default function AdminDashboard() {
             .collection('queues')
             .add({
                 maxWaitPerCustomer: time[0],
-                pharmacyId: "",
+                pharmaId: "",
                 autocall: autocall[0],
                 partySizeReq: partySize[0],
                 qName: qName,

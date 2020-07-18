@@ -4,31 +4,93 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { firebase } from '../firebase/config';
 import { Card, Header } from 'react-native-elements';
 import { handleQueryId } from "../util/index.js";
-
+import { FlatList } from 'react-native-gesture-handler';
+import Modal from 'react-native-modal';
 
 export default function UserHome() {
     const id = firebase.auth().currentUser.uid;
-    const [name, setName] = useState("");
-    const [queues, setQueues] = useState("");
+    const [qName, setQName] = useState("");
+    const [queues, setQueues] = useState([]);
+    const [queue, setQueue] = useState(null)
+    const [queueDetails, setQueueDetails] = useState(null)
+    const [visible, setVisible] = useState(false)
 
-    // Gets called once the application renders
+    const toggleModal = () => {
+        setVisible(!visible)
+    }
+
+    // firebase
+    //     .firestore()
+    //     .collection('users')
+    //     .doc(id)
+    //     .get()
+    //     .then((doc) => {
+    //         setName(doc.data().name)
+    //     })
+
     useEffect(() => {
+        searchQueues()
         //changes the state of queues to whats returned from handleQueryId
-        setQueues(handleQueryId("1fied8DyP6JWAMoSpHFK"));
-    })
+        setQueue(handleQueryId("1fied8DyP6JWAMoSpHFK"));
+    }, [])
 
-    firebase
-        .firestore()
-        .collection('users')
-        .doc(id)
-        .get()
-        .then((doc) => {
-            setName(doc.data().name)
-        })
+    const searchQueues = () => {
+        firebase
+            .firestore()
+            .collection('users')
+            .doc(id)
+            .get()
+            .then(doc => setQueues(doc.data().curQueues))
+            .catch(error => alert(error))
+    }
 
-    //var curQueues = data.map(name, )
+    const getQueueDetails = (qId) => {
+        firebase
+            .firestore()
+            .collection('queues')
+            .doc(qId)
+            .get()
+            .then(doc => setQueueDetails(doc.data()))
+            .catch(error => alert(error))
+    }
+
+    const getQName = (qId) => {
+        const [qName, setQName] = useState("");
+        firebase
+            .firestore()
+            .collection('queues')
+            .doc(qId)
+            .get()
+            .then(doc => setQName(doc.data().qName))
+            .catch(error => alert(error))
+        return qName
+    }
+
+    const getPharmaName = () => {
+        const [pharmaName, setPharmaName] = useState("")
+        firebase
+            .firestore()
+            .collection('queues')
+            .doc(qId)
+            .get()
+            .then(doc => setPharmaName(doc.data().pharmaId))
+            .catch(error => alert(error))
+        return pharmaName
+    }
+
+    const getWaitTime = () => {
+        const [waitTime, setWaitTime] = useState(null)
+        firebase
+            .firestore()
+            .collection('queues')
+            .doc(qId)
+            .get()
+            .then(doc => setWaitTime(doc.data().users.length))
+            .catch(error => alert(error))
+        return waitTime
+    }
+
     return (
-        
         <View>
             <KeyboardAwareScrollView>
                 <Header centerComponent={{ text: 'Your Dashboard' }} />
@@ -39,13 +101,23 @@ export default function UserHome() {
                         titleStyle={styles.titleSyle}
                     >
                         {/* loop through queues state and display queues */}
-                        {/* <TextInput
-                        placeholder='e.g. CVS'
-                        autoCorrect={false}
-                        inputStyle={styles.input}
-                        onChangeText={val => setPharmaName(val)}
-                        value={pharmaName}
-                    /> */}
+                        <FlatList
+                            data={queues}
+                            renderItem={({ item }) => (
+                                <TouchableOpacity onPress={() => toggleModal()}>
+                                    <Card containerStyle={styles.cardContent}>
+                                        <Text>{getQName(item)}</Text>
+                                    </Card>
+                                    <Modal isVisible={visible}>
+                                        <Card containerStyle={styles.card}>
+                                            <Text>{getQName(item)}</Text>
+                                            <Text>{getPharmaName(item)}</Text>
+                                            <Text>{getWaitTime(item)}</Text>
+                                        </Card>
+                                    </Modal>
+                                </TouchableOpacity>
+                            )}
+                        />
                     </Card>
                 </Card>
             </KeyboardAwareScrollView>

@@ -67,7 +67,7 @@ export default function Nearby() {
                         <Card containerStyle={styles.cardContent}>
                             <Text>{item.name}</Text>
                         </Card>
-                        <Modal visible={visible}>
+                        <Modal isVisible={visible}>
                             <Card containerStyle={styles.card}>
                                 <Text>{item.name}</Text>
                                 <Text>{item.curCount}</Text>
