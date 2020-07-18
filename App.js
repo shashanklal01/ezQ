@@ -32,9 +32,6 @@ export default function App() {
   } else {
     id = adminid;
   }
-
-  console.log(id);
-
   
   firebase
     .firestore()
@@ -64,6 +61,17 @@ export default function App() {
   }
 
   const AppStack = () => {
+    const id = firebase.auth().currentUser.uid
+    firebase
+      .firestore()
+      .collection('admins')
+      .doc(id)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          setIsAdmin(true)
+        }
+      })
     return (isAdmin ? <AdminStack /> : <UserStack />)
   }
 

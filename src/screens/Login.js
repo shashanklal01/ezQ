@@ -22,8 +22,8 @@ export default function Login({ navigation }) {
                     .collection('users')
                     .doc(uid)
                     .get()
-                    .then(firestoreDocument => {
-                        if (!firestoreDocument.exists) {
+                    .then(doc => {
+                        if (!doc.exists) {
                             alert("User does not exist.")
                             return;
                         }
@@ -32,16 +32,6 @@ export default function Login({ navigation }) {
                     .catch(error => alert(error));
             })
             .catch(error => alert(error))
-    }
-
-    const checkAdmin = () => {
-        firebase
-            .database()
-            .collection('users')
-            .get()
-            .then(snapshot => {
-                snapshot.docs
-            })
     }
 
     return (

@@ -39,9 +39,9 @@ export default function UserStack() {
                 name="Settings"
                 component={Settings}
                 options={{
-                    tabBarLabel: 'Home',
+                    tabBarLabel: 'Settings',
                     tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons name="account-settings-outline" color={color} size={size} />
+                        <MaterialCommunityIcons name="account-settings" color={color} size={size} />
                     ),
                 }}
             />
