@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet, Picker } from 'react-native'
+import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet, Picker, SafeAreaView } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { firebase } from '../firebase/config'
 import { Header, Card } from 'react-native-elements';
@@ -21,7 +21,18 @@ export default function Nearby() {
         // of all the nearby pharmacies, basically retrieve this info
         // from firebase and store into this array.
         // use the preset array on top as an example
-        
+        // const snapshot = firebase.firestore().collection('pharmacies').get()
+        // setNearbyPharma(snapshot.docs.map(doc => doc.data()))
+        // console.log(nearbyPharma)
+
+        firebase
+            .firestore()
+            .collection('pharmacies')
+            .get()
+            .then(snapshot => {
+                setNearbyPharma(snapshot.docs.map(doc => doc.data()))
+                console.log(nearbyPharma)
+            })
     }, [])
 
     const toggleModal = () => {
@@ -58,7 +69,7 @@ export default function Nearby() {
     }
 
     return (
-        <View>
+        <SafeAreaView>
             <Header centerComponent={{ text: 'Nearby Pharmacies', style: { color: '#fff' } }} />
             <FlatList
                 keyExtractor={(item) => item.pharmaId}
@@ -96,7 +107,7 @@ export default function Nearby() {
                     </TouchableOpacity>
                 )}
             />
-        </View>
+        </SafeAreaView>
     )
 }
 
