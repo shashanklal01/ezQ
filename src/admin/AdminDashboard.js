@@ -17,6 +17,7 @@ export default function AdminDashboard() {
     const adminId = firebase.auth().currentUser.uid
     const [qId, setQId] = useState(null)
     const [pharmaId, setPharmaId] = useState(null)
+    const [curQueues, setCurQueues] = useState(null)
 
     const toggleModal = () => {
         setVisible(!visible)
@@ -40,7 +41,7 @@ export default function AdminDashboard() {
                 upNextUser: "",
                 qId: "",
             })
-            .then((docRef) => {
+            .then(docRef => {
                 firebase
                     .firestore()
                     .collection('queues')
@@ -122,6 +123,18 @@ export default function AdminDashboard() {
     useEffect(() => {
         // get all queues of this pharmacy
     }, [])
+
+    const getCurQueuesId = () => {
+        firebase
+            .firestore()
+            .collection('pharmacies')
+            .doc(pharmaId)
+            .get()
+            .then(doc => {
+                setCurQueues(doc.data().curQueuesId)
+            })
+            .catch(error => alert(error))
+    }
 
     return (
         <KeyboardAwareScrollView>

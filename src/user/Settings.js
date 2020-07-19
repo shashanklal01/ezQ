@@ -20,6 +20,7 @@ export default function Settings() {
     return (
         <KeyboardAwareScrollView >
             <Header centerComponent={{ text: 'Your Profile', style: { color: '#fff' } }} />
+            <Text>Welcome user id: {firebase.auth().currentUser.uid}</Text>
             <Card
                 containerStyle={styles.card}
                 title='Name'
