@@ -24,8 +24,17 @@ export default function Login({ navigation }) {
                     .get()
                     .then(doc => {
                         if (!doc.exists) {
-                            alert("User does not exist.")
-                            return;
+                            firebase
+                            .firestore()
+                            .collection('admins')
+                            .doc(uid)
+                            .get()
+                            .then(doc2 => {
+                                if (!doc2.exists) {
+                                    alert('User does not exist!')
+                                    return;
+                                }
+                            })
                         }
                         navigation.navigate('Home')
                     })
