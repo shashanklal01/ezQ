@@ -66,6 +66,7 @@ export default function AdminDashboard() {
             .get()
             .then(doc => {
                 setPharmaId(doc.data().pharmaId)
+                console.log(pharmaId)
                 firebase
                     .firestore()
                     .collection('pharmacies')

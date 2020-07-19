@@ -6,19 +6,21 @@ import AdminHome from '../admin/AdminHome'
 
 export default function Home() {
 
-    const id = firebase.auth().currentUser.uid
     const [isAdmin, setIsAdmin] = useState(false)
 
-    firebase
-        .firestore()
-        .collection('admins')
-        .doc(id)
-        .get()
-        .then((doc) => {
-            if (doc.exists) {
-                setIsAdmin(true)
-            }
-        })
+    useEffect(() => {
+        const id = firebase.auth().currentUser.uid
+        firebase
+            .firestore()
+            .collection('admins')
+            .doc(id)
+            .get()
+            .then((doc) => {
+                if (doc.exists) {
+                    setIsAdmin(true)
+                }
+            })
+    }, [])
 
     return (
         <View>
