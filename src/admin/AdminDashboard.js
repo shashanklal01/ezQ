@@ -81,7 +81,7 @@ export default function AdminDashboard() {
             .doc(pharmaId)
             .get()
             .then(doc => {
-                setCurQueues(doc.data().curQueuesId)
+                setCurQueues(doc.data().curQueuesId[0])
             })
             .catch(error => alert(error))
     }
@@ -139,6 +139,8 @@ export default function AdminDashboard() {
             .then(doc => {
                 setPharmaId(doc.data().pharmaId)
             })
+        getCurQueuesId()
+        console.log(curQueues)
     }, [])
 
     return (
@@ -149,7 +151,7 @@ export default function AdminDashboard() {
                 renderItem={({ item }) => (
                     <TouchableOpacity onPress={() => showQueueDetails()}>
                         <Card>
-                            
+                            <Text>(name of queue) - (name of pharmacy)</Text>
                         </Card>
                     </TouchableOpacity>
                 )}
