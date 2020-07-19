@@ -53,8 +53,7 @@ export default function Settings() {
                 titleStyle={styles.titleSyle}
             >
                 <TouchableOpacity
-                    style={styles.buttonSmall}
-                    onPress={() => onSignupPress()}>
+                    style={styles.buttonSmall}>
                     <Text style={styles.buttonTitle}>Choose Photo</Text>
                 </TouchableOpacity>
             </Card>

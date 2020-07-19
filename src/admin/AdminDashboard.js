@@ -8,16 +8,20 @@ import MultiSelect from 'react-native-multiple-select';
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
 
 export default function AdminDashboard() {
-    const [visible, setVisible] = useState(false)
+    
+    // variables for creating a queue
     const [qName, setQName] = useState(null)
     const [time, setTime] = useState(null)
     const [autocall, setAutocall] = useState(null)
     const [partySize, setPartySize] = useState(null)
-    const [queues, setQueues] = useState(null)
+
+    // other variables
     const adminId = firebase.auth().currentUser.uid
+    const [queues, setQueues] = useState(null)
     const [qId, setQId] = useState(null)
     const [pharmaId, setPharmaId] = useState(null)
     const [curQueues, setCurQueues] = useState(null)
+    const [visible, setVisible] = useState(false)
 
     const toggleModal = () => {
         setVisible(!visible)
@@ -33,7 +37,7 @@ export default function AdminDashboard() {
             .collection('queues')
             .add({
                 maxWaitPerCustomer: time[0],
-                pharmaId: "",
+                pharmaId: pharmaId,
                 autocall: autocall[0],
                 partySizeReq: partySize[0],
                 qName: qName,
@@ -51,6 +55,7 @@ export default function AdminDashboard() {
                     })
                     .then(() => {
                         setQId(docRef.id)
+                        console.log(qId)
                         storeQRefToPharmacy()
                         alert("Queue successfully created!")
                         toggleModal()
@@ -62,20 +67,27 @@ export default function AdminDashboard() {
     const storeQRefToPharmacy = () => {
         firebase
             .firestore()
-            .collection('admins')
-            .doc(adminId)
+            .collection('pharmacies')
+            .doc(pharmaId)
+            .update({
+                curQueuesId: firebase.firestore.FieldValue.arrayUnion(qId)
+            })
+    }
+
+    const getCurQueuesId = () => {
+        firebase
+            .firestore()
+            .collection('pharmacies')
+            .doc(pharmaId)
             .get()
             .then(doc => {
-                setPharmaId(doc.data().pharmaId)
-                console.log(pharmaId)
-                firebase
-                    .firestore()
-                    .collection('pharmacies')
-                    .doc(pharmaId)
-                    .update({
-                        curQueuesId: firebase.firestore.FieldValue.arrayUnion(qId)
-                    })
+                setCurQueues(doc.data().curQueuesId)
             })
+            .catch(error => alert(error))
+    }
+
+    const showQueueDetails = () => {
+
     }
 
     const autocallItems = [{
@@ -116,25 +128,18 @@ export default function AdminDashboard() {
         name: '< 30 min'
     }]
 
-    const showQueueDetails = () => {
-
-    }
 
     useEffect(() => {
         // get all queues of this pharmacy
-    }, [])
-
-    const getCurQueuesId = () => {
         firebase
             .firestore()
-            .collection('pharmacies')
-            .doc(pharmaId)
+            .collection('admins')
+            .doc(adminId)
             .get()
             .then(doc => {
-                setCurQueues(doc.data().curQueuesId)
+                setPharmaId(doc.data().pharmaId)
             })
-            .catch(error => alert(error))
-    }
+    }, [])
 
     return (
         <KeyboardAwareScrollView>
@@ -143,7 +148,9 @@ export default function AdminDashboard() {
                 data={queues}
                 renderItem={({ item }) => (
                     <TouchableOpacity onPress={() => showQueueDetails()}>
-
+                        <Card>
+                            
+                        </Card>
                     </TouchableOpacity>
                 )}
             />
