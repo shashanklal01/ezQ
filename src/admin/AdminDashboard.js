@@ -151,7 +151,7 @@ export default function AdminDashboard() {
                     </Card>
                     <Card
                         containerStyle={styles.card}
-                        title='Average wait time per customer'
+                        title='Max wait time per customer'
                         titleStyle={styles.titleSyle}
                     >
                         <MultiSelect

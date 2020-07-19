@@ -12,8 +12,8 @@ export default function Nearby() {
     const [qId, setQId] = useState(null)
 
     const [nearbyPharma, setNearbyPharma] = useState([
-        { name: 'pharma 1', pharmaId: 1, qId: ['pickup1', 'flu1'], curCount: 5, time: 10 + ' min' },
-        { name: 'pharma 2', pharmaId: 2, qId: ['pickup2', 'flu2'], curCount: 3, time: 1 + ' min' },
+        { name: 'Pharma 1', pharmaId: 1, qId: ['pickup1', 'flu1'], pharmaAddress:'123 Fast Ln, New York, NY, 12345', curCount: 5, time: 10 + ' min' },
+        { name: 'Pharma 2', pharmaId: 2, qId: ['pickup2', 'flu2'], pharmaAddress:'456 Office Rd, Scranton, NY, 12345', curCount: 3, time: 1 + ' min' },
     ])
 
     useEffect(() => {
@@ -65,17 +65,23 @@ export default function Nearby() {
                 renderItem={({ item }) => (
                     <TouchableOpacity onPress={() => toggleModal()}>
                         <Card containerStyle={styles.cardContent}>
-                            <Text style={styles.pharmName}>{item.name}</Text>
-                            {/*need to add address*/}
+                            <View style={styles.cardTitle}>
+                                <Text style={styles.pharmName}>{item.name}</Text>
+                                <Text style={styles.addressText}>{item.pharmaAddress}</Text>
+                            </View>
                             <Text>{item.curCount} people in queue</Text>
-                                <Text>{item.time} avg. wait time</Text>
+                            <Text>{item.time} avg. wait time</Text>
                         </Card>
                         <Modal isVisible={visible}>
                             <Card containerStyle={styles.card}>
-                                <Text style={styles.pharmName}>{item.name}</Text>
-                                {/*need to add address*/}
-                                <Text>{item.curCount} people in queue</Text>
-                                <Text style={styles.cardContent}>Approximately {item.time} of wait time</Text>
+                                <View style={styles.cardTitle}>
+                                    <Text style={styles.pharmName}>{item.name}</Text>
+                                    <Text style={styles.addressText}>{item.pharmaAddress}</Text>
+                                </View>
+                                <View style={styles.modalContent}> 
+                                    <Text style={styles.modalContentInfo}>{item.curCount} people currently in queue</Text>
+                                    <Text style={styles.modalContentInfo}>Estimated {item.time} of wait time</Text>
+                                </View>
                                 <TouchableOpacity
                                     style={styles.button}
                                     onPress={() => {
@@ -114,6 +120,17 @@ const styles = StyleSheet.create({
     cardContent: {
         marginHorizontal: 18,
         marginVertical: 20,
+        paddingLeft: 30,
+        paddingBottom: 30
+    },
+    modalContent: {
+        marginHorizontal: 18,
+        marginVertical: 20,
+    },
+    modalContentInfo: {
+        fontSize: 20,
+        textAlign: "center",
+        marginVertical: 5,
     },
     titleStyle: {
         textAlign: "center",
@@ -123,8 +140,13 @@ const styles = StyleSheet.create({
         height: 10
     },
     pharmName:{
-        fontSize: 16,
-        marginVertical: 10
+        fontSize: 20,
+    },
+    cardTitle: {
+        marginVertical: 10,
+    },
+    addressText: {
+        color: '#919191',
     },
     button: {
         backgroundColor: '#788eec',
