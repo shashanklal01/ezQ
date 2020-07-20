@@ -55,9 +55,9 @@ export default function Signup({ navigation }) {
     return (
         <View style={styles.container}>
             <KeyboardAwareScrollView
-                style={{ flex: 1, width: '100%' }}
+                style={{width: '100%' }}
                 keyboardShouldPersistTaps="always">
-                <ScrollView>
+                <ScrollView contentContainerStyle={{flex:1}}>
                 <Image
                     style={styles.logo}
                     source={require('../../assets/logo.png')}
@@ -114,7 +114,6 @@ export default function Signup({ navigation }) {
                     <Picker.Item label="Customer" value={false} />
                     <Picker.Item label="Administrator" value={true} />
                 </Picker>
-
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => onSignupPress()}>
@@ -123,6 +122,7 @@ export default function Signup({ navigation }) {
                 <View style={styles.footerView}>
                     <Text style={styles.footerText}>Already got an account? <Text onPress={() => onLoginPress()} style={styles.footerLink}>Log in</Text></Text>
                 </View>
+                <View style={styles.empty}></View>
                 </ScrollView>
             </KeyboardAwareScrollView>
         </View>
@@ -138,7 +138,6 @@ const styles = StyleSheet.create({
 
     },
     logo: {
-        flex: 1,
         height: 80,
         width: 170,
         alignSelf: "center",
@@ -183,5 +182,8 @@ const styles = StyleSheet.create({
         color: "#788eec",
         fontWeight: "bold",
         fontSize: 16
+    },
+    empty:{
+        height: 100
     }
 })
