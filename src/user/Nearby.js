@@ -12,8 +12,8 @@ export default function Nearby() {
     const [qId, setQId] = useState(null)
 
     const [nearbyPharma, setNearbyPharma] = useState([
-        { name: 'Pharma 1', pharmaId: 1, qId: ['pickup1', 'flu1'], pharmaAddress:'123 Fast Ln, New York, NY, 12345', curCount: 5, time: 10 + ' min' },
-        { name: 'Pharma 2', pharmaId: 2, qId: ['pickup2', 'flu2'], pharmaAddress:'456 Office Rd, Scranton, NY, 12345', curCount: 3, time: 1 + ' min' },
+        { name: 'pharma 1', pharmaId: 1, qId: ['pickup1', 'flu1'], curCount: 5, time: 10 + ' min' },
+        { name: 'pharma 2', pharmaId: 2, qId: ['pickup2', 'flu2'], curCount: 3, time: 1 + ' min' },
     ])
 
     useEffect(() => {
