@@ -12,8 +12,8 @@ export default function Nearby() {
     const [qId, setQId] = useState(null)
 
     const [nearbyPharma, setNearbyPharma] = useState([
-        { name: 'pharma 1', pharmaId: 1, qId: ['pickup1', 'flu1'], curCount: 5, time: 10 + ' min' },
-        { name: 'pharma 2', pharmaId: 2, qId: ['pickup2', 'flu2'], curCount: 3, time: 1 + ' min' },
+        // { name: 'pharma 1', pharmaId: 1, qId: ['pickup1', 'flu1'], curCount: 5, time: 10 + ' min' },
+        // { name: 'pharma 2', pharmaId: 2, qId: ['pickup2', 'flu2'], curCount: 3, time: 1 + ' min' },
     ])
 
     useEffect(() => {
@@ -31,19 +31,20 @@ export default function Nearby() {
             .get()
             .then(snapshot => {
                 setNearbyPharma(snapshot.docs.map(doc => doc.data()))
-                console.log(nearbyPharma)
             })
+        console.log(nearbyPharma)
+        //console.log(nearbyPharma[1].curQueuesId)
     }, [])
 
     const toggleModal = () => {
         setVisible(!visible)
     }
 
-    const handleJoinQueue = () => {
+    const handleJoinQueue = (qId) => {
         //  adding a user to a queue for a specific pharmacy
         // (and adding that queue to the list for the user)
 
-        var curUser = firebase.auth().currentUser.uid
+        const curUser = firebase.auth().currentUser.uid
         firebase
             .firestore()
             .collection('queues')
@@ -68,6 +69,30 @@ export default function Nearby() {
             .catch(error => alert(error))
     }
 
+    const getCurPeople = (qId) => {
+        firebase
+            .firestore()
+            .collection('queues')
+            .doc(qId)
+            .get()
+            .then(doc => {
+                return doc.data().users.length
+            })
+    }
+
+    const getWaitTime = (qId) => {
+        firebase
+            .firestore()
+            .collection('queues')
+            .doc(qId)
+            .get()
+            .then(doc => {
+                const wait = doc.data().maxWaitPerCustomer
+                const curCount = doc.data().users.length
+                return (wait * curCount)
+            })
+    }
+
     return (
         <SafeAreaView>
             <Header centerComponent={{ text: 'Nearby Pharmacies', style: { color: '#fff' } }} />
@@ -77,22 +102,21 @@ export default function Nearby() {
                 renderItem={({ item }) => (
                     <TouchableOpacity onPress={() => toggleModal()}>
                         <Card containerStyle={styles.cardContent}>
-                            <Text style={styles.pharmName}>{item.name}</Text>
-                            <Text>{item.pharmaAddress}</Text>
-                            <Text>{item.curCount} people in queue</Text>
-                            <Text>{item.time} avg. wait time</Text>
+                            <Text style={styles.pharmName}>{item['pharmaName']}</Text>
+                            <Text>Located on {item['pharmaAddress']}</Text>
+                            <Text>{() => getCurPeople(item['curQueuesId'][0])} people in queue</Text>
+                            <Text>Approximately {() => getWaitTime(item['curQueuesId'][0])} minutes of wait time</Text>
                         </Card>
                         <Modal isVisible={visible}>
                             <Card containerStyle={styles.card}>
                                 <Text style={styles.pharmName}>{item.name}</Text>
-                                <Text>{item.pharmaAddress}</Text>
-                                <Text>{item.curCount} people in queue</Text>
-                                <Text style={styles.cardContent}>Approximately {item.time} of wait time</Text>
+                                <Text>{item['pharmaAddress']}</Text>
+                                <Text>{getCurPeople(item['curQueuesId'][0])} people in queue</Text>
+                                <Text style={styles.cardContent}>Approximately {getWaitTime(item['curQueuesId'][0])} of wait time</Text>
                                 <TouchableOpacity
                                     style={styles.button}
                                     onPress={() => {
-                                        setQId(item.qId)
-                                        handleJoinQueue()
+                                        handleJoinQueue(item['curQueuesId'][0])
                                     }
                                     }>
                                     <Text style={styles.buttonTitle}>Join Queue</Text>

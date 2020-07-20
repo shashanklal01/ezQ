@@ -11,6 +11,7 @@ export default function UserHome() {
     const id = firebase.auth().currentUser.uid;
     const [qName, setQName] = useState("");
     const [queues, setQueues] = useState(null)
+    const [queue, setQueue] = useState(null)
     const [queueDetails, setQueueDetails] = useState(null)
     const [visible, setVisible] = useState(false)
 
@@ -85,10 +86,10 @@ export default function UserHome() {
             .doc(qId)
             .get()
             .then(doc => {
-                var count = doc.data().users.length
-                var wait = doc.data().maxWaitPerCustomer
+                const count = doc.data().users.length
+                const wait = doc.data().maxWaitPerCustomer
                 setWaitTime(count * wait)
-            })
+        })
             .catch(error => alert(error))
         return waitTime
     }
@@ -106,6 +107,7 @@ export default function UserHome() {
                     ) : (
                             <FlatList
                                 data={queues}
+                                keyExtractor={(item) => item['qId']}
                                 renderItem={({ item }) => (
                                     <TouchableOpacity onPress={() => toggleModal()}>
                                         <Card containerStyle={styles.cardContent}>
