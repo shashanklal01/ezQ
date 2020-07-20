@@ -150,6 +150,7 @@ export default function AdminSetup() {
                 curQueuesId: [],
                 createdById: adminId,
                 pharmaAddress: pharmaAddress,
+                pharmaId: "",
             })
             .then((docRef) => {
                 firebase
@@ -159,6 +160,13 @@ export default function AdminSetup() {
                     .update({
                         pharmaId: docRef.id,
                         hasSetUp: true,
+                    })
+                firebase
+                    .firestore()
+                    .collection('pharmacies')
+                    .doc(docRef.id)
+                    .update({
+                        pharmaId: docRef.id
                     })
                 alert("Pharmacy successfully set up!")
             })
@@ -191,7 +199,7 @@ export default function AdminSetup() {
                     placeholder='Address, City, State, ZIP code'
                     autoCorrect={false}
                     inputStyle={styles.input}
-                    onChangeText={val => setPharmaAddress(val)} 
+                    onChangeText={val => setPharmaAddress(val)}
                     value={pharmaAddress}
                 />
             </Card>
