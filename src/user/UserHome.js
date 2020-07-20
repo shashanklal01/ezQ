@@ -11,7 +11,6 @@ export default function UserHome() {
     const id = firebase.auth().currentUser.uid;
     const [qName, setQName] = useState("");
     const [queues, setQueues] = useState(null)
-    const [queue, setQueue] = useState(null)
     const [queueDetails, setQueueDetails] = useState(null)
     const [visible, setVisible] = useState(false)
 
@@ -31,7 +30,7 @@ export default function UserHome() {
     useEffect(() => {
         searchQueues()
         //changes the state of queues to whats returned from handleQueryId
-        setQueue(handleQueryId("1fied8DyP6JWAMoSpHFK"));
+        //setQueue(handleQueryId("1fied8DyP6JWAMoSpHFK"));
     }, [])
 
     const searchQueues = () => {
@@ -85,7 +84,11 @@ export default function UserHome() {
             .collection('queues')
             .doc(qId)
             .get()
-            .then(doc => setWaitTime(doc.data().users.length))
+            .then(doc => {
+                var count = doc.data().users.length
+                var wait = doc.data().maxWaitPerCustomer
+                setWaitTime(count * wait)
+            })
             .catch(error => alert(error))
         return waitTime
     }

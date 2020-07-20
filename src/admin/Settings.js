@@ -20,6 +20,7 @@ export default function Settings() {
     return (
         <KeyboardAwareScrollView>
             <Header centerComponent={{ text: 'Your Profile', style: { color: '#fff' } }} />
+            <Text>Welcome user id: {firebase.auth().currentUser.uid}</Text>
             <Card
                 containerStyle={styles.card}
                 title='What is the name of your pharmacy?'
@@ -52,8 +53,7 @@ export default function Settings() {
                 titleStyle={styles.titleSyle}
             >
                 <TouchableOpacity
-                    style={styles.buttonSmall}
-                    onPress={() => onSignupPress()}>
+                    style={styles.buttonSmall}>
                     <Text style={styles.buttonTitle}>Choose Photo</Text>
                 </TouchableOpacity>
             </Card>
