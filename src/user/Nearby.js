@@ -42,8 +42,10 @@ export default function Nearby() {
     const handleJoinQueue = () => {
         //  adding a user to a queue for a specific pharmacy
         // (and adding that queue to the list for the user)
-
+        console.log('entered handleJoinQueue')
         var curUser = firebase.auth().currentUser.uid
+        console.log(curUser)
+        console.log(qId)
         firebase
             .firestore()
             .collection('queues')
@@ -91,7 +93,10 @@ export default function Nearby() {
                                 <TouchableOpacity
                                     style={styles.button}
                                     onPress={() => {
-                                        setQId(item.qId)
+                                        console.log(item)
+                                        console.log('First item in list:')
+                                        console.log(item.curQueuesId[0])
+                                        setQId(item.curQueuesId[0])
                                         handleJoinQueue()
                                     }
                                     }>
