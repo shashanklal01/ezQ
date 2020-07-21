@@ -46,6 +46,7 @@ export default function Nearby() {
         // (and adding that queue to the list for the user)
 
         const curUser = firebase.auth().currentUser.uid
+        console.log(qId)
         firebase
             .firestore()
             .collection('queues')
@@ -71,6 +72,8 @@ export default function Nearby() {
     }
 
     const getCurPeople = (qId) => {
+        console.log("getCurPeople:")
+        console.log(qId)
         firebase
             .firestore()
             .collection('queues')
@@ -83,16 +86,18 @@ export default function Nearby() {
     }
 
     const getWaitTime = (qId) => {
+        console.log("getWaitTimes")
+        console.log(qId)
         firebase
             .firestore()
             .collection('queues')
             .doc(qId)
             .get()
             .then(doc => {
-                //const wait = doc.data().maxWaitPerCustomer
-                const wait = 5 // was tired of getting a bunch of warnings
-                //const curCount = doc.data().users.length
-                const curCount = 6
+                const wait = doc.data().maxWaitPerCustomer
+                //const wait = 5 // was tired of getting a bunch of warnings
+                const curCount = doc.data().users.length
+                //const curCount = 6
                 return (wait * curCount)
             })
     }

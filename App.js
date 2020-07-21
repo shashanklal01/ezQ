@@ -27,12 +27,15 @@ export default function App() {
   var adminid = 'oopsie'
   var id;
   // if user exists, get the user id
+
+  //commenting out to try and debug
   if (user) {
     id = firebase.auth().currentUser.uid
   } else {
     id = adminid;
   }
-  
+
+
   firebase
     .firestore()
     .collection('admins')
@@ -44,12 +47,15 @@ export default function App() {
       }
     })
 
+//commenting out for debug
   useEffect(() => {
     firebase
       .auth()
       .onAuthStateChanged(user => setCurUser(user))
 
   }, [])
+
+
 
   const AuthStack = () => {
     return (
