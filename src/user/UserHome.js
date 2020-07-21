@@ -15,6 +15,10 @@ export default function UserHome() {
     const [queueDetails, setQueueDetails] = useState(null)
     const [visible, setVisible] = useState(false)
 
+    // added in this bc it said qId was invalid - temporary queue
+    const [qId, setQId] = useState("R39svCTy6s1gn7G7X4JP")
+
+
     const toggleModal = () => {
         setVisible(!visible)
     }
@@ -54,8 +58,8 @@ export default function UserHome() {
             .catch(error => alert(error))
     }
 
+    //const [qName, setQName] = useState("");
     const getQName = (qId) => {
-        const [qName, setQName] = useState("");
         firebase
             .firestore()
             .collection('queues')
@@ -66,8 +70,8 @@ export default function UserHome() {
         return qName
     }
 
+    const [pharmaName, setPharmaName] = useState("")
     const getPharmaName = () => {
-        const [pharmaName, setPharmaName] = useState("")
         firebase
             .firestore()
             .collection('queues')
@@ -78,8 +82,8 @@ export default function UserHome() {
         return pharmaName
     }
 
+    const [waitTime, setWaitTime] = useState(null)
     const getWaitTime = () => {
-        const [waitTime, setWaitTime] = useState(null)
         firebase
             .firestore()
             .collection('queues')
