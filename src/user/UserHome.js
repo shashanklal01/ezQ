@@ -15,8 +15,8 @@ export default function UserHome() {
     const [queueDetails, setQueueDetails] = useState(null)
     const [visible, setVisible] = useState(false)
 
-    // added in this bc it said qId was invalid - temporary queue
-    const [qId, setQId] = useState("R39svCTy6s1gn7G7X4JP")
+    // added in this bc it said qId was invalid
+    const [qId, setQId] = useState(null)
 
 
     const toggleModal = () => {
@@ -71,7 +71,7 @@ export default function UserHome() {
     }
 
     const [pharmaName, setPharmaName] = useState("")
-    const getPharmaName = () => {
+    const getPharmaName = (qId) => {
         firebase
             .firestore()
             .collection('queues')
@@ -83,7 +83,7 @@ export default function UserHome() {
     }
 
     const [waitTime, setWaitTime] = useState(null)
-    const getWaitTime = () => {
+    const getWaitTime = (qId) => {
         firebase
             .firestore()
             .collection('queues')
@@ -98,6 +98,29 @@ export default function UserHome() {
         return waitTime
     }
 
+    const handleLeaveQueue = (qId) => {
+        // removes the user from the queue
+        firebase
+            .firestore()
+            .collection('queues')
+            .doc(qId)
+            .update({
+                    'users': firebase.firestore.FieldValue.arrayRemove(id)
+            })
+
+        // removes the queue from the user
+        firebase
+            .firestore()
+            .collection('users')
+            .doc(id)
+            .update({
+                    'curQueues': firebase.firestore.FieldValue.arrayRemove(qId)
+            })
+
+        //right now tested this by putting handleLeaveQueue to happen when the button is press to look at a queue, but this works as intended (assuming you send the correct qId in)
+    }
+
+    // slight bug here: when have more than one queue both cards keep switching back and forth between the names of the queues
     return (
         <View>
             <KeyboardAwareScrollView>
@@ -113,7 +136,11 @@ export default function UserHome() {
                                 data={queues}
                                 keyExtractor={(item) => item['qId']}
                                 renderItem={({ item }) => (
-                                    <TouchableOpacity onPress={() => toggleModal()}>
+                                    <TouchableOpacity onPress={() => {
+                                        //console.log(item)
+                                        //handleLeaveQueue(item)
+                                        toggleModal()}
+                                    }>
                                         <Card containerStyle={styles.cardContent}>
                                             <Text>{getQName(item)}</Text>
                                         </Card>

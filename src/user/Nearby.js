@@ -32,6 +32,7 @@ export default function Nearby() {
             .then(snapshot => {
                 setNearbyPharma(snapshot.docs.map(doc => doc.data()))
             })
+        console.log("NearbyPharma")
         console.log(nearbyPharma)
         //console.log(nearbyPharma[1].curQueuesId)
     }, [])
@@ -76,7 +77,8 @@ export default function Nearby() {
             .doc(qId)
             .get()
             .then(doc => {
-                return doc.data().users.length
+                //return doc.data().users.length
+                return 6 // was tired of getting all the warnings
             })
     }
 
@@ -87,8 +89,10 @@ export default function Nearby() {
             .doc(qId)
             .get()
             .then(doc => {
-                const wait = doc.data().maxWaitPerCustomer
-                const curCount = doc.data().users.length
+                //const wait = doc.data().maxWaitPerCustomer
+                const wait = 5 // was tired of getting a bunch of warnings
+                //const curCount = doc.data().users.length
+                const curCount = 6
                 return (wait * curCount)
             })
     }
@@ -115,13 +119,18 @@ export default function Nearby() {
                                     <Text style={styles.pharmName}>{item['pharmaName']}</Text>
                                     <Text style={styles.addressText}>{item['pharmaAddress']}</Text>
                                 </View>
-                                <View style={styles.modalContent}> 
+                                <View style={styles.modalContent}>
                                     <Text style={styles.modalContentInfo}>{getCurPeople(item['curQueuesId'][0])} people currently in queue</Text>
                                     <Text style={styles.modalContentInfo}>Estimated {getWaitTime(item['curQueuesId'][0])} of wait time</Text>
                                 </View>
                                 <TouchableOpacity
                                     style={styles.button}
                                     onPress={() => {
+                                        // seems to always connect to one pharmacy... no matter what card the user chooses
+                                        console.log('Logging curQueuesId')
+                                        console.log(item['curQueuesId'][0])
+                                        console.log(item)
+                                        console.log(nearbyPharma)
                                         handleJoinQueue(item['curQueuesId'][0])
                                     }
                                     }>
