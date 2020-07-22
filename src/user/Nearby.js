@@ -72,8 +72,8 @@ export default function Nearby() {
     }
 
     const getCurPeople = (qId) => {
-        console.log("getCurPeople:")
-        console.log(qId)
+        //console.log("getCurPeople:")
+        //console.log(qId)
         firebase
             .firestore()
             .collection('queues')
@@ -85,8 +85,8 @@ export default function Nearby() {
     }
 
     const getWaitTime = (qId) => {
-        console.log("getWaitTimes")
-        console.log(qId)
+        //console.log("getWaitTimes")
+        //console.log(qId)
         firebase
             .firestore()
             .collection('queues')
@@ -129,10 +129,10 @@ export default function Nearby() {
                                     style={styles.button}
                                     onPress={() => {
                                         // seems to always connect to one pharmacy... no matter what card the user chooses
-                                        console.log('Logging curQueuesId')
-                                        console.log(item['curQueuesId'][0])
-                                        console.log(item)
-                                        console.log(nearbyPharma)
+                                        //console.log('Logging curQueuesId')
+                                        //console.log(item['curQueuesId'][0])
+                                        //console.log(item)
+                                        //console.log(nearbyPharma)
                                         handleJoinQueue(item['curQueuesId'][0])
                                     }
                                     }>

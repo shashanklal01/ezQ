@@ -117,9 +117,12 @@ export default function UserHome() {
                     'curQueues': firebase.firestore.FieldValue.arrayRemove(qId)
             })
 
+        searchQueues() // at end looks for new queues
         //right now tested this by putting handleLeaveQueue to happen when the button is press to look at a queue, but this works as intended (assuming you send the correct qId in)
     }
 
+    console.log("Current queues that this user can see:")
+    console.log(queues)
     // slight bug here: when have more than one queue both cards keep switching back and forth between the names of the queues
     return (
         <View>
@@ -154,6 +157,15 @@ export default function UserHome() {
                                                 onPress={() => toggleModal()}
                                                 style={styles.button}>
                                                 <Text style={styles.buttonTitle}>Go back</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity
+                                                onPress={() => {
+                                                    handleLeaveQueue(item)
+                                                    toggleModal()
+                                                    }
+                                                }
+                                                style={styles.button}>
+                                                <Text style={styles.buttonTitle}>Leave Queue</Text>
                                             </TouchableOpacity>
                                         </Modal>
                                     </TouchableOpacity>
