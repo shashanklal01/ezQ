@@ -32,6 +32,7 @@ export default function Nearby() {
             .then(snapshot => {
                 setNearbyPharma(snapshot.docs.map(doc => doc.data()))
             })
+        console.log("NearbyPharma")
         console.log(nearbyPharma)
         //console.log(nearbyPharma[1].curQueuesId)
     }, [])
@@ -45,6 +46,7 @@ export default function Nearby() {
         // (and adding that queue to the list for the user)
 
         const curUser = firebase.auth().currentUser.uid
+        console.log(qId)
         firebase
             .firestore()
             .collection('queues')
@@ -70,6 +72,8 @@ export default function Nearby() {
     }
 
     const getCurPeople = (qId) => {
+        //console.log("getCurPeople:")
+        //console.log(qId)
         firebase
             .firestore()
             .collection('queues')
@@ -81,6 +85,8 @@ export default function Nearby() {
     }
 
     const getWaitTime = (qId) => {
+        //console.log("getWaitTimes")
+        //console.log(qId)
         firebase
             .firestore()
             .collection('queues')
@@ -115,13 +121,18 @@ export default function Nearby() {
                                     <Text style={styles.pharmName}>{item['pharmaName']}</Text>
                                     <Text style={styles.addressText}>{item['pharmaAddress']}</Text>
                                 </View>
-                                <View style={styles.modalContent}> 
+                                <View style={styles.modalContent}>
                                     <Text style={styles.modalContentInfo}>{getCurPeople(item['curQueuesId'][0])} people currently in queue</Text>
                                     <Text style={styles.modalContentInfo}>Estimated {getWaitTime(item['curQueuesId'][0])} of wait time</Text>
                                 </View>
                                 <TouchableOpacity
                                     style={styles.button}
                                     onPress={() => {
+                                        // seems to always connect to one pharmacy... no matter what card the user chooses
+                                        //console.log('Logging curQueuesId')
+                                        //console.log(item['curQueuesId'][0])
+                                        //console.log(item)
+                                        //console.log(nearbyPharma)
                                         handleJoinQueue(item['curQueuesId'][0])
                                     }
                                     }>

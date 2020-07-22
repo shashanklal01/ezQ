@@ -8,7 +8,7 @@ import MultiSelect from 'react-native-multiple-select';
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
 
 export default function AdminDashboard() {
-    
+
     // variables for creating a queue
     const [qName, setQName] = useState(null)
     const [time, setTime] = useState(null)
@@ -19,7 +19,7 @@ export default function AdminDashboard() {
     const adminId = firebase.auth().currentUser.uid
     const [queues, setQueues] = useState(null)
     const [qId, setQId] = useState(null)
-    const [pharmaId, setPharmaId] = useState(null)
+    const [pharmaId, setPharmaId] = useState("temp")
     const [curQueues, setCurQueues] = useState(null)
     const [visible, setVisible] = useState(false)
 
@@ -138,6 +138,7 @@ export default function AdminDashboard() {
             .get()
             .then(doc => {
                 setPharmaId(doc.data().pharmaId)
+                console.log(pharmaId)
             })
         getCurQueuesId()
         console.log(curQueues)
@@ -160,7 +161,7 @@ export default function AdminDashboard() {
                 <ScrollView>
                     <Card>
                         <Header
-                            //leftComponent={{icon: 'arrow-back'}} 
+                            //leftComponent={{icon: 'arrow-back'}}
                             centerComponent={{ text: 'New Queue' }} />
 
                         <Card

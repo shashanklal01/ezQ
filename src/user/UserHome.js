@@ -15,6 +15,10 @@ export default function UserHome() {
     const [queueDetails, setQueueDetails] = useState(null)
     const [visible, setVisible] = useState(false)
 
+    // added in this bc it said qId was invalid
+    const [qId, setQId] = useState(null)
+    const [hasQueues, setHasQueues] = useState(false)
+
     const toggleModal = () => {
         setVisible(!visible)
     }
@@ -32,6 +36,8 @@ export default function UserHome() {
         searchQueues()
         //changes the state of queues to whats returned from handleQueryId
         //setQueue(handleQueryId("1fied8DyP6JWAMoSpHFK"));
+        //trying to check if there is something in the queues
+
     }, [])
 
     const searchQueues = () => {
@@ -42,6 +48,21 @@ export default function UserHome() {
             .get()
             .then(doc => setQueues(doc.data().curQueues))
             .catch(error => alert(error))
+
+            //trying to check if there is something in the queues
+            if(queues != null)
+            {
+                if(queues.length == 0)
+                {
+                    setHasQueues(false)
+                }
+                if(queues.length >= 1)
+                {
+                    setHasQueues(true)
+                }
+            }
+            console.log("HasQueues:")
+            console.log(hasQueues)//trying to check if there is something in the queues
     }
 
     const getQueueDetails = (qId) => {
@@ -54,8 +75,8 @@ export default function UserHome() {
             .catch(error => alert(error))
     }
 
+    //const [qName, setQName] = useState("");
     const getQName = (qId) => {
-        const [qName, setQName] = useState("");
         firebase
             .firestore()
             .collection('queues')
@@ -66,8 +87,8 @@ export default function UserHome() {
         return qName
     }
 
-    const getPharmaName = () => {
-        const [pharmaName, setPharmaName] = useState("")
+    const [pharmaName, setPharmaName] = useState("")
+    const getPharmaName = (qId) => {
         firebase
             .firestore()
             .collection('queues')
@@ -78,8 +99,8 @@ export default function UserHome() {
         return pharmaName
     }
 
-    const getWaitTime = () => {
-        const [waitTime, setWaitTime] = useState(null)
+    const [waitTime, setWaitTime] = useState(null)
+    const getWaitTime = (qId) => {
         firebase
             .firestore()
             .collection('queues')
@@ -94,12 +115,41 @@ export default function UserHome() {
         return waitTime
     }
 
+    const handleLeaveQueue = (qId) => {
+        // removes the user from the queue
+        firebase
+            .firestore()
+            .collection('queues')
+            .doc(qId)
+            .update({
+                    'users': firebase.firestore.FieldValue.arrayRemove(id)
+            })
+
+        // removes the queue from the user
+        firebase
+            .firestore()
+            .collection('users')
+            .doc(id)
+            .update({
+                    'curQueues': firebase.firestore.FieldValue.arrayRemove(qId)
+            })
+
+        searchQueues() // at end looks for new queues
+        //right now tested this by putting handleLeaveQueue to happen when the button is press to look at a queue, but this works as intended (assuming you send the correct qId in)
+    }
+
+
+    console.log("Current queues that this user can see:")
+    console.log(queues)
+    // slight bug here: when have more than one queue both cards keep switching back and forth between the names of the queues
+
+    // changed !queues to !hasQueues to try and make it a boolean
     return (
         <View>
             <KeyboardAwareScrollView>
                 <Header centerComponent={{ text: 'Your Dashboard', style: { color: '#fff' } }} />
                 <Card containerStyle={styles.card}>
-                    {!queues ? (
+                    {!hasQueues ? (
                         <View>
                             <Text style={styles.cardContent}>You are currently not in any queues!</Text>
                             <Text style={styles.cardContent}>To join one, head onto the Nearby Tab!</Text>
@@ -109,7 +159,11 @@ export default function UserHome() {
                                 data={queues}
                                 keyExtractor={(item) => item['qId']}
                                 renderItem={({ item }) => (
-                                    <TouchableOpacity onPress={() => toggleModal()}>
+                                    <TouchableOpacity onPress={() => {
+                                        //console.log(item)
+                                        //handleLeaveQueue(item)
+                                        toggleModal()}
+                                    }>
                                         <Card containerStyle={styles.cardContent}>
                                             <Text>{getQName(item)}</Text>
                                         </Card>
@@ -123,6 +177,15 @@ export default function UserHome() {
                                                 onPress={() => toggleModal()}
                                                 style={styles.button}>
                                                 <Text style={styles.buttonTitle}>Go back</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity
+                                                onPress={() => {
+                                                    handleLeaveQueue(item)
+                                                    toggleModal()
+                                                    }
+                                                }
+                                                style={styles.button}>
+                                                <Text style={styles.buttonTitle}>Leave Queue</Text>
                                             </TouchableOpacity>
                                         </Modal>
                                     </TouchableOpacity>
