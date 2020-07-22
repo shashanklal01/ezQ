@@ -17,7 +17,7 @@ export default function UserHome() {
 
     // added in this bc it said qId was invalid
     const [qId, setQId] = useState(null)
-
+    const [hasQueues, setHasQueues] = useState(false)
 
     const toggleModal = () => {
         setVisible(!visible)
@@ -36,6 +36,8 @@ export default function UserHome() {
         searchQueues()
         //changes the state of queues to whats returned from handleQueryId
         //setQueue(handleQueryId("1fied8DyP6JWAMoSpHFK"));
+        //trying to check if there is something in the queues
+
     }, [])
 
     const searchQueues = () => {
@@ -46,6 +48,21 @@ export default function UserHome() {
             .get()
             .then(doc => setQueues(doc.data().curQueues))
             .catch(error => alert(error))
+
+            //trying to check if there is something in the queues
+            if(queues != null)
+            {
+                if(queues.length == 0)
+                {
+                    setHasQueues(false)
+                }
+                if(queues.length >= 1)
+                {
+                    setHasQueues(true)
+                }
+            }
+            console.log("HasQueues:")
+            console.log(hasQueues)//trying to check if there is something in the queues
     }
 
     const getQueueDetails = (qId) => {
@@ -121,15 +138,18 @@ export default function UserHome() {
         //right now tested this by putting handleLeaveQueue to happen when the button is press to look at a queue, but this works as intended (assuming you send the correct qId in)
     }
 
+
     console.log("Current queues that this user can see:")
     console.log(queues)
     // slight bug here: when have more than one queue both cards keep switching back and forth between the names of the queues
+
+    // changed !queues to !hasQueues to try and make it a boolean
     return (
         <View>
             <KeyboardAwareScrollView>
                 <Header centerComponent={{ text: 'Your Dashboard', style: { color: '#fff' } }} />
                 <Card containerStyle={styles.card}>
-                    {!queues ? (
+                    {!hasQueues ? (
                         <View>
                             <Text style={styles.cardContent}>You are currently not in any queues!</Text>
                             <Text style={styles.cardContent}>To join one, head onto the Nearby Tab!</Text>
