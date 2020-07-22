@@ -80,8 +80,7 @@ export default function Nearby() {
             .doc(qId)
             .get()
             .then(doc => {
-                //return doc.data().users.length
-                return 6 // was tired of getting all the warnings
+                return doc.data().users.length
             })
     }
 
@@ -95,9 +94,7 @@ export default function Nearby() {
             .get()
             .then(doc => {
                 const wait = doc.data().maxWaitPerCustomer
-                //const wait = 5 // was tired of getting a bunch of warnings
                 const curCount = doc.data().users.length
-                //const curCount = 6
                 return (wait * curCount)
             })
     }
