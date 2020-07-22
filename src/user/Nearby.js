@@ -30,7 +30,8 @@ export default function Nearby() {
             .collection('pharmacies')
             .get()
             .then(snapshot => {
-                setNearbyPharma(snapshot.docs.map(doc => doc.data()))
+                console.log(snapshot.docs.map(doc => doc.data()))
+                setNearbyPharma(nearbyPharma => {snapshot.docs.map(doc => doc.data())}) // added the =>
             })
         console.log("NearbyPharma")
         console.log(nearbyPharma)
@@ -129,10 +130,10 @@ export default function Nearby() {
                                     style={styles.button}
                                     onPress={() => {
                                         // seems to always connect to one pharmacy... no matter what card the user chooses
-                                        //console.log('Logging curQueuesId')
-                                        //console.log(item['curQueuesId'][0])
-                                        //console.log(item)
-                                        //console.log(nearbyPharma)
+                                        console.log('Logging curQueuesId')
+                                        console.log(item['curQueuesId'][0])
+                                        console.log(item)
+                                        console.log(nearbyPharma)
                                         handleJoinQueue(item['curQueuesId'][0])
                                     }
                                     }>
