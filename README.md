@@ -1,4 +1,4 @@
-### Won the Best Beginner Team Award at [URx InternHacks 2020](www.internhacks.com)
+### Won the Best Beginner Team Award at [URx InternHacks 2020](https://www.internhacks.com)
 # ezQ
 
 ## Team Members
