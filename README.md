@@ -1,5 +1,7 @@
 ### Won the Best Beginner Team Award at [URx InternHacks 2020](https://www.internhacks.com)
 # ezQ
+* A virtual queueing solution for pharmacies
+* 
 
 ## Team Members
 * Product Manager - Shashank Lal
