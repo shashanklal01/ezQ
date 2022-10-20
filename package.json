@@ -31,7 +31,7 @@
     "react-native-modal": "^11.5.6",
     "react-native-multiple-choice": "0.0.8",
     "react-native-multiple-select": "^0.5.5",
-    "react-native-reanimated": "~1.9.0",
+    "react-native-reanimated": "~2.10.0",
     "react-native-safe-area-context": "^3.0.7",
     "react-native-screens": "~2.9.0",
     "react-native-swipeout": "^2.3.6",
